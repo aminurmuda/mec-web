@@ -1,0 +1,16 @@
+# Build output
+.next
+out
+build
+
+# Node modules
+node_modules
+
+# TypeScript environment files
+next-env.d.ts
+
+# Log files
+*.log
+
+# Static assets
+public/**/*.svg

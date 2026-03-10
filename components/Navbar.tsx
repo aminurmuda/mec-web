@@ -1,48 +1,47 @@
-"use client"
+'use client';
 
-import { useState } from "react"
-import { League_Spartan } from "next/font/google"
+import { useState } from 'react';
+import { League_Spartan } from 'next/font/google';
 
 const leagueSpartan = League_Spartan({
-  subsets: ["latin"],
-  variable: "--font-league-spartan",
-})
+  subsets: ['latin'],
+  variable: '--font-league-spartan',
+});
 
 const Navbar = () => {
-  const [open, setOpen] = useState(false)
+  const [open, setOpen] = useState(false);
 
   const menu = [
-    { name: "Classes", id: "classes" },
-    { name: "Registration", id: "registration" },
-    { name: "Insights", id: "insights" },
-    { name: "About", id: "about" },
-    { name: "Testimonials", id: "testimonials" },
-  ]
+    { name: 'Classes', id: 'classes' },
+    { name: 'Registration', id: 'registration' },
+    { name: 'Insights', id: 'insights' },
+    { name: 'About', id: 'about' },
+    { name: 'Testimonials', id: 'testimonials' },
+  ];
 
   const scrollTo = (id: string) => {
-    const el = document.getElementById(id)
+    const el = document.getElementById(id);
 
-    if (!el) return
+    if (!el) return;
 
     // Get navbar height dynamically
-    const nav = document.querySelector("nav")
-    const navHeight = nav?.offsetHeight || 0
+    const nav = document.querySelector('nav');
+    const navHeight = nav?.offsetHeight || 0;
 
     // Scroll so section top is just below navbar
-    const top = el.getBoundingClientRect().top + window.scrollY - navHeight
+    const top = el.getBoundingClientRect().top + window.scrollY - navHeight;
 
     window.scrollTo({
       top,
-      behavior: "smooth",
-    })
+      behavior: 'smooth',
+    });
 
-    setOpen(false)
-  }
+    setOpen(false);
+  };
 
   return (
     <nav className="sticky top-0 bg-brand-bg z-50 border-b border-gray-200">
       <div className="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
-
         {/* Logo */}
         <h1
           className={`${leagueSpartan.variable} font-sans font-extrabold text-lg text-brand-primary leading-none lg:w-5`}
@@ -80,7 +79,6 @@ const Navbar = () => {
       {open && (
         <div className="md:hidden bg-brand-bg border-t border-gray-200">
           <div className="flex flex-col px-6 py-4 gap-4">
-
             {menu.map((item) => (
               <button
                 key={item.id}
@@ -90,12 +88,11 @@ const Navbar = () => {
                 {item.name}
               </button>
             ))}
-
           </div>
         </div>
       )}
     </nav>
-  )
-}
+  );
+};
 
-export default Navbar
+export default Navbar;

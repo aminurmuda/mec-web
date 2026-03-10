@@ -161,6 +161,7 @@ const ClassesSection = () => {
 
           <div className="flex gap-2">
             <button
+              aria-label="Scroll Left"
               onClick={scrollLeft}
               className="rounded-lg border border-gray-100 bg-blue-200 px-4 py-2 text-sm hover:bg-blue-100"
             >
@@ -169,6 +170,7 @@ const ClassesSection = () => {
               </svg>
             </button>
             <button
+              aria-label="Scroll Right"
               onClick={scrollRight}
               className="rounded-lg border border-gray-100 bg-blue-200 px-4 py-2 text-sm hover:bg-blue-100"
             >
@@ -179,9 +181,13 @@ const ClassesSection = () => {
           </div>
         </div>
 
-        <div ref={scrollRef} className="flex gap-6 overflow-x-auto scroll-smooth no-scrollbar py-4">
-          {courses.map((course) => (
-            <div key={course.id} className="min-w-75">
+        <div
+          ref={scrollRef}
+          className="flex gap-6 overflow-x-auto scroll-smooth no-scrollbar py-4 px-4"
+          style={{ scrollPaddingLeft: '24px' }}
+        >
+          {courses.map((course, index) => (
+            <div key={course.id} className={`min-w-75 ${index === 0 ? 'ml-6' : ''}`}>
               <Card
                 course={course}
                 isSelected={selectedCourseId === course.id}

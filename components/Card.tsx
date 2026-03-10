@@ -51,7 +51,7 @@ const Card = (props: CardProps) => {
       </div>
 
       <div className="mt-6 flex items-center justify-center">
-        <ButtonCTA fullWidth>Register</ButtonCTA>
+        <ButtonCTA fullWidth>Select Course</ButtonCTA>
       </div>
     </div>
   );

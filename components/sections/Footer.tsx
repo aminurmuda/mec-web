@@ -43,7 +43,15 @@ const Footer = () => {
         {/* Contact Info */}
         <div>
           <h4 className="text-white font-semibold mb-4">Contact Us</h4>
-          <p className="text-gray-300 text-sm">Phone: +62 899-9325-539</p>
+          <p className="text-gray-300 text-sm">
+            Phone: +62{' '}
+            <a
+              href={`https://wa.me/62${process.env.NEXT_PUBLIC_PHONE_NUMBER}`}
+              className="text-gray-300"
+            >
+              {process.env.NEXT_PUBLIC_PHONE_NUMBER}
+            </a>
+          </p>
           <p className="text-gray-300 text-sm">Email: info@medeenaenglish.com</p>
           <div className="flex space-x-4 mt-4">
             <a href="#" className="text-gray-300 font-semibold hover:text-white transition">

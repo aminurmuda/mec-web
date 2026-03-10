@@ -22,7 +22,10 @@ Age: ${age}
 Background: ${background}
 Course: ${selectedCourse}`;
     const encodedMessage = encodeURIComponent(message);
-    window.open(`https://wa.me/628999325539?text=${encodedMessage}`, '_blank');
+    window.open(
+      `https://wa.me/62${process.env.NEXT_PUBLIC_PHONE_NUMBER}?text=${encodedMessage}`,
+      '_blank',
+    );
   };
 
   return (

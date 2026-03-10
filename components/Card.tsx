@@ -24,7 +24,7 @@ const Card = ({
   meetings
 }: CardProps) => {
   return (
-    <div className="flex flex-col justify-between h-full rounded-xl border border-gray-200 bg-white p-6 shadow-sm transition hover:shadow-md">
+    <div className="flex flex-col justify-between h-full rounded-xl border border-gray-200 bg-white p-6 shadow-sm transition transform hover:shadow-md hover:scale-105">
       <div>
         <h3 className="text-xl font-bold text-brand-primary">
           {title}

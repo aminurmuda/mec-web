@@ -42,14 +42,12 @@ const Navbar = () => {
   return (
     <nav className="sticky top-0 bg-brand-bg z-50 border-b border-gray-200">
       <div className="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
-        {/* Logo */}
         <h1
           className={`${leagueSpartan.variable} font-sans font-extrabold text-lg text-brand-primary leading-none lg:w-5`}
         >
           Medeena English Center
         </h1>
 
-        {/* Desktop Menu */}
         <div className="hidden md:flex gap-8 text-sm font-medium">
           {menu.map((item) => (
             <button

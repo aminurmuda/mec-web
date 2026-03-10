@@ -1,21 +1,34 @@
+'use client';
+
 import Navbar from '@/components/Navbar';
 import Hero from '@/components/sections/Hero';
 import Registration from '@/components/sections/Registration';
 import Insights from '@/components/sections/Insights';
 import About from '@/components/sections/About';
 import Testimonials from '@/components/sections/Testimonials';
-import Class from '@/components/sections/Class';
+import Class, { courses } from '@/components/sections/Class';
+import { useState } from 'react';
 
 const Page = () => {
+  const [selectedCourseId, setSelectedCourseId] = useState<number>(0);
+
+  const getSelectedCourse = () => {
+    const course = courses.find((course) => course.id === selectedCourseId);
+    if (!course) {
+      return '';
+    }
+    return `${course?.title} (${course?.subtitle}) ${course?.id}`;
+  };
+
   return (
     <main className="flex flex-col">
       <Navbar />
 
       <Hero />
 
-      <Class />
+      <Class selectedCourseId={selectedCourseId} setSelectedCourseId={setSelectedCourseId} />
 
-      <Registration />
+      <Registration selectedCourse={getSelectedCourse()} />
 
       <Insights />
 

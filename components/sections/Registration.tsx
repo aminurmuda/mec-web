@@ -2,7 +2,11 @@
 
 import { useState } from 'react';
 
-const Registration = () => {
+interface RegistrationProps {
+  selectedCourse: string;
+}
+
+const Registration = ({ selectedCourse }: RegistrationProps) => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
@@ -11,7 +15,8 @@ const Registration = () => {
     const message = `Hello, I want to register:
 Name: ${name}
 Email: ${email}
-Phone: ${phone}`;
+Phone: ${phone}
+Course: ${selectedCourse}`;
     const encodedMessage = encodeURIComponent(message);
     window.open(`https://wa.me/628999325539?text=${encodedMessage}`, '_blank');
   };
@@ -22,8 +27,8 @@ Phone: ${phone}`;
         <h2 className="text-3xl font-bold mb-4 text-gray-800">Registration</h2>
 
         <p className="text-gray-600 mb-10">
-          Fill in your details below and click "Enroll Now". We will receive your registration
-          information directly via WhatsApp and contact you to confirm your enrollment.
+          Fill in your details below and click <strong>Enroll Now</strong>. We will receive your
+          registration information directly via WhatsApp and contact you to confirm your enrollment.
         </p>
 
         <div className="p-8 bg-brand-bg rounded-lg shadow-md max-w-md mx-auto">

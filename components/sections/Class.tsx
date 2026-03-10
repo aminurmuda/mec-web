@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef, useState } from 'react';
+import { useRef } from 'react';
 import Card from '@/components/Card';
 
 export type Course = {
@@ -16,7 +16,7 @@ export type Course = {
   meetings: number;
 };
 
-const courses: Course[] = [
+export const courses: Course[] = [
   {
     id: 1,
     title: 'Baby Steps Class',
@@ -139,9 +139,14 @@ const courses: Course[] = [
   },
 ];
 
-const ClassesSection = () => {
-  const [selectedCourseId, setSelectedCourseId] = useState<number>(0);
+interface ClassesSectionProps {
+  selectedCourseId: number;
+  setSelectedCourseId: (id: number) => void;
+}
+
+const ClassesSection = ({ selectedCourseId, setSelectedCourseId }: ClassesSectionProps) => {
   const scrollRef = useRef<HTMLDivElement | null>(null);
+  const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   const scrollLeft = () => {
     if (!scrollRef.current) return;
@@ -151,6 +156,16 @@ const ClassesSection = () => {
   const scrollRight = () => {
     if (!scrollRef.current) return;
     scrollRef.current.scrollBy({ left: 320, behavior: 'smooth' });
+  };
+
+  const handleSelect = (id: number, index: number) => {
+    setSelectedCourseId(id);
+
+    // Scroll selected card into view
+    const cardEl = cardRefs.current[index];
+    if (cardEl && scrollRef.current) {
+      cardEl.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+    }
   };
 
   return (
@@ -163,7 +178,7 @@ const ClassesSection = () => {
             <button
               aria-label="Scroll Left"
               onClick={scrollLeft}
-              className="rounded-lg border border-gray-100 bg-blue-200 px-4 py-2 text-sm hover:bg-blue-100"
+              className="rounded-lg border border-gray-100 bg-white px-4 py-2 text-sm hover:bg-blue-100"
             >
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" className="h-5 w-5">
                 <path d="M169.4 297.4C156.9 309.9 156.9 330.2 169.4 342.7L361.4 534.7C373.9 547.2 394.2 547.2 406.7 534.7C419.2 522.2 419.2 501.9 406.7 489.4L237.3 320L406.6 150.6C419.1 138.1 419.1 117.8 406.6 105.3C394.1 92.8 373.8 92.8 361.3 105.3L169.3 297.3z" />
@@ -172,7 +187,7 @@ const ClassesSection = () => {
             <button
               aria-label="Scroll Right"
               onClick={scrollRight}
-              className="rounded-lg border border-gray-100 bg-blue-200 px-4 py-2 text-sm hover:bg-blue-100"
+              className="rounded-lg border border-gray-100 bg-white px-4 py-2 text-sm hover:bg-blue-100"
             >
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" className="h-5 w-5">
                 <path d="M471.1 297.4C483.6 309.9 483.6 330.2 471.1 342.7L279.1 534.7C266.6 547.2 246.3 547.2 233.8 534.7C221.3 522.2 221.3 501.9 233.8 489.4L403.2 320L233.9 150.6C221.4 138.1 221.4 117.8 233.9 105.3C246.4 92.8 266.7 92.8 279.2 105.3L471.2 297.3z" />
@@ -183,15 +198,21 @@ const ClassesSection = () => {
 
         <div
           ref={scrollRef}
-          className="flex gap-6 overflow-x-auto scroll-smooth no-scrollbar py-4 px-4"
+          className="flex gap-6 overflow-x-auto scroll-smooth no-scrollbar py-4 px-4 cursor-grab"
           style={{ scrollPaddingLeft: '24px' }}
         >
           {courses.map((course, index) => (
-            <div key={course.id} className={`min-w-75 ${index === 0 ? 'ml-6' : ''}`}>
+            <div
+              key={course.id}
+              ref={(el) => {
+                cardRefs.current[index] = el;
+              }}
+              className={`min-w-75 ${index === 0 ? 'ml-6' : ''}`}
+            >
               <Card
                 course={course}
                 isSelected={selectedCourseId === course.id}
-                onSelect={setSelectedCourseId}
+                onSelect={() => handleSelect(course.id, index)}
               />
             </div>
           ))}

@@ -3,48 +3,59 @@
 import { useState } from 'react';
 
 const Registration = () => {
-  const [tab, setTab] = useState('register');
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [phone, setPhone] = useState('');
+
+  const handleSubmit = () => {
+    const message = `Hello, I want to register:
+Name: ${name}
+Email: ${email}
+Phone: ${phone}`;
+    const encodedMessage = encodeURIComponent(message);
+    window.open(`https://wa.me/628999325539?text=${encodedMessage}`, '_blank');
+  };
 
   return (
     <section id="registration" className="py-24 bg-white">
       <div className="max-w-4xl mx-auto px-6 text-center">
-        <h2 className="text-3xl font-bold mb-10 text-gray-800">Registration</h2>
+        <h2 className="text-3xl font-bold mb-4 text-gray-800">Registration</h2>
 
-        <div className="flex justify-center gap-4 mb-8">
-          <button
-            onClick={() => setTab('register')}
-            className={
-              tab === 'register'
-                ? 'px-4 py-2 rounded bg-blue-200 text-gray-800 font-semibold'
-                : 'px-4 py-2 rounded bg-blue-100'
-            }
-          >
-            Register
-          </button>
+        <p className="text-gray-600 mb-10">
+          Fill in your details below and click "Enroll Now". We will receive your registration
+          information directly via WhatsApp and contact you to confirm your enrollment.
+        </p>
+
+        <div className="p-8 bg-brand-bg rounded-lg shadow-md max-w-md mx-auto">
+          <input
+            type="text"
+            placeholder="Full Name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            className="w-full mb-4 px-4 py-2 border border-gray-200 bg-white rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
+          />
+          <input
+            type="email"
+            placeholder="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            className="w-full mb-4 px-4 py-2 border border-gray-200 bg-white rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
+          />
+          <input
+            type="tel"
+            placeholder="Phone Number"
+            value={phone}
+            onChange={(e) => setPhone(e.target.value)}
+            className="w-full mb-6 px-4 py-2 border border-gray-200 bg-white rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
+          />
 
           <button
-            onClick={() => setTab('promo')}
-            className={
-              tab === 'promo'
-                ? 'px-4 py-2 rounded bg-blue-200 text-gray-800 font-semibold'
-                : 'px-4 py-2 rounded bg-blue-100'
-            }
+            onClick={handleSubmit}
+            className="w-full px-6 py-3 bg-brand-primary text-white font-bold rounded hover:opacity-90"
           >
-            Promo
+            Enroll Now
           </button>
         </div>
-
-        {tab === 'register' && (
-          <div className="p-6 bg-brand-bg rounded-lg">
-            Register today and start your English journey.
-          </div>
-        )}
-
-        {tab === 'promo' && (
-          <div className="p-6 bg-brand-bg rounded-lg">
-            Limited promotion: 30% discount for new students.
-          </div>
-        )}
       </div>
     </section>
   );

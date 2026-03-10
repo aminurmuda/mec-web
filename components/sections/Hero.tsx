@@ -1,22 +1,8 @@
 'use client';
 
+import { scrollTo } from '../utils';
+
 const Hero = () => {
-  const scrollTo = (id: string) => {
-    const el = document.getElementById(id);
-
-    if (!el) return;
-
-    const nav = document.querySelector('nav');
-    const navHeight = nav?.offsetHeight || 0;
-
-    const top = el.getBoundingClientRect().top + window.scrollY - navHeight;
-
-    window.scrollTo({
-      top,
-      behavior: 'smooth',
-    });
-  };
-
   return (
     <section className="relative h-screen w-full">
       <div

@@ -59,7 +59,7 @@ const Review = (props: ReviewProps) => {
 
       <div className="mt-4">
         <p className="font-semibold text-brand-primary">
-          {name} {id}
+          {name} #{id}
         </p>
       </div>
     </div>

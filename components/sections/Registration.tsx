@@ -20,7 +20,7 @@ const Registration = () => {
             onClick={() => setTab("register")}
             className={
               tab === "register"
-                ? "px-4 py-2 rounded bg-blue-300 text-white font-semibold"
+                ? "px-4 py-2 rounded bg-blue-200 text-gray-800 font-semibold"
                 : "px-4 py-2 rounded bg-blue-100"
             }
           >
@@ -31,7 +31,7 @@ const Registration = () => {
             onClick={() => setTab("promo")}
             className={
               tab === "promo"
-                ? "px-4 py-2 rounded bg-blue-300 text-white font-semibold"
+                ? "px-4 py-2 rounded bg-blue-200 text-gray-800 font-semibold"
                 : "px-4 py-2 rounded bg-blue-100"
             }
           >

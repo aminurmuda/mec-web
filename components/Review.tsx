@@ -61,7 +61,7 @@ const Review = (props: ReviewProps) => {
         <p className="font-semibold text-brand-primary">
           {name} {id}
         </p>
-        <p className="font-light text-brand-primary">{role}</p>
+        {/* <p className="font-light text-brand-primary">{role}</p> */}
       </div>
     </div>
   );

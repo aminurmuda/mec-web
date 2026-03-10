@@ -39,7 +39,7 @@ const Navbar = () => {
 
         {/* Logo */}
         <h1
-          className={`${leagueSpartan.variable} font-sans font-extrabold text-lg text-brand-primary leading-none`}
+          className={`${leagueSpartan.variable} font-sans font-extrabold text-lg text-brand-primary leading-none lg:w-5`}
         >
           Medeena English Center
         </h1>

@@ -195,28 +195,26 @@ const ClassesSection = ({ selectedCourseId, setSelectedCourseId }: ClassesSectio
             </button>
           </div>
         </div>
-
-        <div
-          ref={scrollRef}
-          className="flex gap-6 overflow-x-auto scroll-smooth no-scrollbar py-4 px-4 cursor-grab"
-          style={{ scrollPaddingLeft: '24px' }}
-        >
-          {courses.map((course, index) => (
-            <div
-              key={course.id}
-              ref={(el) => {
-                cardRefs.current[index] = el;
-              }}
-              className={`min-w-75 ${index === 0 ? 'ml-6' : ''}`}
-            >
-              <Card
-                course={course}
-                isSelected={selectedCourseId === course.id}
-                onSelect={() => handleSelect(course.id, index)}
-              />
-            </div>
-          ))}
-        </div>
+      </div>
+      <div
+        ref={scrollRef}
+        className="flex gap-6 overflow-x-auto scroll-smooth snap-x snap-mandatory no-scrollbar py-4 cursor-grab"
+      >
+        {courses.map((course, index) => (
+          <div
+            key={course.id}
+            ref={(el) => {
+              cardRefs.current[index] = el;
+            }}
+            className={`min-w-[75%] md:min-w-[320px] snap-center ${index === 0 ? 'ml-6' : ''} ${index === courses.length - 1 ? 'mr-6' : ''}`}
+          >
+            <Card
+              course={course}
+              isSelected={selectedCourseId === course.id}
+              onSelect={() => handleSelect(course.id, index)}
+            />
+          </div>
+        ))}
       </div>
     </section>
   );

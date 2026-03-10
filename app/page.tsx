@@ -8,7 +8,7 @@ import Class from "@/components/sections/Class"
 
 const Page = () => {
   return (
-    <main>
+    <main className="flex flex-col">
 
       <Navbar />
 

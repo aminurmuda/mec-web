@@ -23,7 +23,7 @@ const Hero = () => {
         </p>
 
         <button
-          onClick={() => scrollTo('classes')}
+          onClick={() => scrollTo('courses')}
           className="px-8 py-3 bg-brand-primary rounded-lg hover:opacity-90 font-bold"
         >
           Start Learning

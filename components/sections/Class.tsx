@@ -141,7 +141,7 @@ const ClassesSection = () => {
   }
 
   return (
-    <section id="classes" className="bg-brand-bg py-16 scroll-mt-20">
+    <section id="classes" className="bg-brand-bg py-16">
       <div className="mx-auto max-w-6xl px-6">
 
         <div className="mb-10 flex items-center justify-between">

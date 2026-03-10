@@ -22,11 +22,17 @@ const Navbar = () => {
   const scrollTo = (id: string) => {
     const el = document.getElementById(id)
 
-    if (!el) {
-      return
-    }
+    if (!el) return
 
-    el.scrollIntoView({
+    // Get navbar height dynamically
+    const nav = document.querySelector("nav")
+    const navHeight = nav?.offsetHeight || 0
+
+    // Scroll so section top is just below navbar
+    const top = el.getBoundingClientRect().top + window.scrollY - navHeight
+
+    window.scrollTo({
+      top,
       behavior: "smooth",
     })
 

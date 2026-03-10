@@ -39,7 +39,7 @@ const testimonials = [
 
 const Testimonials = () => {
   return (
-    <section id="testimonials" className="py-24">
+    <section id="testimonials" className="py-24 scroll-mt-20">
 
       <div className="max-w-5xl mx-auto px-6">
 

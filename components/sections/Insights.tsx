@@ -1,6 +1,6 @@
 const Insights = () => {
   return (
-    <section id="insights" className="py-24 bg-brand-bg">
+    <section id="insights" className="py-24 bg-brand-bg scroll-mt-20">
 
       <div className="max-w-4xl mx-auto px-6 text-center">
 

@@ -1,3 +1,5 @@
+import ButtonCTA from "./Button"
+
 type CardProps = {
   title: string
   subtitle: string
@@ -58,9 +60,9 @@ const Card = ({
       </div>
 
       <div className="mt-6 flex items-center justify-center">
-        <button className="rounded-lg bg-brand-primary px-4 py-2 text-sm font-medium text-white transition hover:opacity-90 w-full">
+        <ButtonCTA fullWidth>
           Register
-        </button>
+        </ButtonCTA>
       </div>
     </div>
   )

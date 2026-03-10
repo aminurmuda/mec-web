@@ -52,7 +52,7 @@ const Footer = () => {
               {process.env.NEXT_PUBLIC_PHONE_NUMBER}
             </a>
           </p>
-          <p className="text-gray-300 text-sm">Email: info@medeenaenglish.com</p>
+          {/* <p className="text-gray-300 text-sm">Email: info@medeenaenglish.com</p> */}
           <div className="flex space-x-4 mt-4">
             <a href="#" className="text-gray-300 font-semibold hover:text-white transition">
               FB

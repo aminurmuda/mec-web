@@ -169,7 +169,7 @@ const ClassesSection = ({ selectedCourseId, setSelectedCourseId }: ClassesSectio
   };
 
   return (
-    <section id="courses" className="bg-brand-bg py-16">
+    <section id="courses" className="bg-brand-bg py-20">
       <div className="mx-auto max-w-6xl px-6">
         <div className="mb-10 flex items-center justify-between">
           <h2 className="text-3xl font-bold">Our English Programs</h2>

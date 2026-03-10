@@ -12,7 +12,7 @@ const Navbar = () => {
   const [open, setOpen] = useState(false);
 
   const menu = [
-    { name: 'Classes', id: 'classes' },
+    { name: 'Courses', id: 'courses' },
     { name: 'Registration', id: 'registration' },
     { name: 'Insights', id: 'insights' },
     { name: 'About', id: 'about' },

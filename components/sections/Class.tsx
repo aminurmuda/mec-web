@@ -1,11 +1,24 @@
 'use client';
 
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import Card from '@/components/Card';
 
-const classes = [
+export type Course = {
+  id: number;
+  title: string;
+  subtitle: string;
+  description: string;
+  price: string;
+  duration: string;
+  level: string;
+  pax: number;
+  session: number;
+  meetings: number;
+};
+
+const courses: Course[] = [
   {
-    id: 6,
+    id: 1,
     title: 'Baby Steps Class',
     subtitle: 'General English Class',
     description: 'Perfect for beginners who want to start learning English from zero.',
@@ -17,7 +30,7 @@ const classes = [
     meetings: 4,
   },
   {
-    id: 7,
+    id: 2,
     title: 'Focus Class',
     subtitle: 'Speaking Class',
     description: 'Improve your speaking confidence in daily conversations.',
@@ -29,7 +42,7 @@ const classes = [
     meetings: 4,
   },
   {
-    id: 8,
+    id: 3,
     title: 'Focus Class',
     subtitle: 'Reading Class',
     description: 'Improve your reading skills and comprehension.',
@@ -41,7 +54,7 @@ const classes = [
     meetings: 4,
   },
   {
-    id: 9,
+    id: 4,
     title: 'Focus Class',
     subtitle: 'Grammar Class',
     description: 'Improve your grammar skills and understanding.',
@@ -53,7 +66,7 @@ const classes = [
     meetings: 4,
   },
   {
-    id: 10,
+    id: 5,
     title: 'Focus Class',
     subtitle: 'Writing Class',
     description: 'Improve your writing skills and composition.',
@@ -65,7 +78,7 @@ const classes = [
     meetings: 4,
   },
   {
-    id: 1,
+    id: 6,
     title: 'Baby Steps Class',
     subtitle: 'General English Class',
     description: 'Perfect for beginners who want to start learning English from zero.',
@@ -77,7 +90,7 @@ const classes = [
     meetings: 4,
   },
   {
-    id: 2,
+    id: 7,
     title: 'Focus Class',
     subtitle: 'Speaking Class',
     description: 'Improve your speaking confidence in daily conversations.',
@@ -89,7 +102,7 @@ const classes = [
     meetings: 4,
   },
   {
-    id: 3,
+    id: 8,
     title: 'Focus Class',
     subtitle: 'Reading Class',
     description: 'Improve your reading skills and comprehension.',
@@ -101,7 +114,7 @@ const classes = [
     meetings: 4,
   },
   {
-    id: 4,
+    id: 9,
     title: 'Focus Class',
     subtitle: 'Grammar Class',
     description: 'Improve your grammar skills and understanding.',
@@ -113,7 +126,7 @@ const classes = [
     meetings: 4,
   },
   {
-    id: 5,
+    id: 10,
     title: 'Focus Class',
     subtitle: 'Writing Class',
     description: 'Improve your writing skills and composition.',
@@ -127,6 +140,7 @@ const classes = [
 ];
 
 const ClassesSection = () => {
+  const [selectedCourseId, setSelectedCourseId] = useState<number>(0);
   const scrollRef = useRef<HTMLDivElement | null>(null);
 
   const scrollLeft = () => {
@@ -140,7 +154,7 @@ const ClassesSection = () => {
   };
 
   return (
-    <section id="classes" className="bg-brand-bg py-16">
+    <section id="courses" className="bg-brand-bg py-16">
       <div className="mx-auto max-w-6xl px-6">
         <div className="mb-10 flex items-center justify-between">
           <h2 className="text-3xl font-bold">Our English Programs</h2>
@@ -166,18 +180,12 @@ const ClassesSection = () => {
         </div>
 
         <div ref={scrollRef} className="flex gap-6 overflow-x-auto scroll-smooth no-scrollbar py-4">
-          {classes.map((program) => (
-            <div key={program.id} className="min-w-75">
+          {courses.map((course) => (
+            <div key={course.id} className="min-w-75">
               <Card
-                title={program.title}
-                subtitle={program.subtitle}
-                description={program.description}
-                price={program.price}
-                duration={program.duration}
-                pax={program.pax}
-                level={program.level}
-                session={program.session}
-                meetings={program.meetings}
+                course={course}
+                isSelected={selectedCourseId === course.id}
+                onSelect={setSelectedCourseId}
               />
             </div>
           ))}

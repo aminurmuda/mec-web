@@ -25,7 +25,7 @@ const Quote = () => (
 );
 
 const Review = (props: ReviewProps) => {
-  const { id, testimonial, name, role, rating } = props;
+  const { id, testimonial, name, rating } = props;
 
   const maxStars = 5;
 
@@ -61,7 +61,6 @@ const Review = (props: ReviewProps) => {
         <p className="font-semibold text-brand-primary">
           {name} {id}
         </p>
-        {/* <p className="font-light text-brand-primary">{role}</p> */}
       </div>
     </div>
   );

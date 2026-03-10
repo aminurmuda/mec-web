@@ -60,9 +60,9 @@ const Testimonials = () => {
         <p className="text-gray-200 mb-10 text-center">
           Our programs welcome learners from various backgrounds – university and master’s students,
           working professionals, teachers, and IELTS candidates. Each class is designed to provide
-          practical and engaging learning experiences, helping students build confidence and apply
-          English in both everyday and professional settings. Here’s what some of our students have
-          to say.
+          practical and engaging learning experiences, help students builds confidence and apply
+          English in both everyday and professional settings. Here’s the students’ testimonials of
+          the English programs.
         </p>
 
         <div className="grid md:grid-cols-2 gap-8">

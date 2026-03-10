@@ -15,8 +15,8 @@ const About = () => {
         <div className="bg-gray-50 rounded-xl p-5 text-left shadow-sm">
           <h3 className="text-xl font-semibold text-gray-800 mb-2">Meet Our Lead Teacher</h3>
           <p className="text-gray-700 leading-snug mb-1">
-            Our lead teacher has been teaching English since 2018, holds a TESOL certification, and
-            has extensive experience guiding professionals from diverse backgrounds.
+            Our lead teacher has been teaching English since 2018, holds MSc TESOL, and has
+            extensive experience guiding professionals from diverse backgrounds.
           </p>
           <p className="text-gray-700 leading-snug">
             They also mentor students for IELTS preparation, providing personalized strategies and

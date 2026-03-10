@@ -5,7 +5,7 @@ import { scrollTo } from '../utils';
 
 const Hero = () => {
   return (
-    <section className="relative h-screen w-full">
+    <section id="hero" className="relative h-screen w-full">
       {/* Optimized Background Image for different screens */}
       <Image
         src="/images/hero.webp"

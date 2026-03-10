@@ -10,12 +10,16 @@ const Registration = ({ selectedCourse }: RegistrationProps) => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
+  const [background, setBackground] = useState('');
+  const [age, setAge] = useState<string>('');
 
   const handleSubmit = () => {
     const message = `Hello, I want to register:
 Name: ${name}
 Email: ${email}
 Phone: ${phone}
+Age: ${age}
+Background: ${background}
 Course: ${selectedCourse}`;
     const encodedMessage = encodeURIComponent(message);
     window.open(`https://wa.me/628999325539?text=${encodedMessage}`, '_blank');
@@ -53,10 +57,24 @@ Course: ${selectedCourse}`;
             onChange={(e) => setPhone(e.target.value)}
             className="w-full mb-6 px-4 py-2 border border-gray-200 bg-white rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
           />
-
+          <input
+            type="number"
+            placeholder="Age"
+            value={age}
+            onChange={(e) => setAge(e.target.value)}
+            className="w-full mb-6 px-4 py-2 border border-gray-200 bg-white rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
+          />
+          <input
+            type="text"
+            placeholder="Your professional background"
+            value={background}
+            onChange={(e) => setBackground(e.target.value)}
+            className="w-full mb-6 px-4 py-2 border border-gray-200 bg-white rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
+          />
           <button
+            disabled={!name || !email || !phone || !age || !background}
             onClick={handleSubmit}
-            className="w-full px-6 py-3 bg-brand-primary text-white font-bold rounded hover:opacity-90"
+            className="w-full px-6 py-3 bg-brand-primary disabled:opacity-50 text-white font-bold rounded hover:opacity-90"
           >
             Enroll Now
           </button>

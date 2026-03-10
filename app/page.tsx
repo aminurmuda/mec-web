@@ -8,6 +8,7 @@ import About from '@/components/sections/About';
 import Testimonials from '@/components/sections/Testimonials';
 import Class, { courses } from '@/components/sections/Class';
 import { useState } from 'react';
+import Footer from '@/components/sections/Footer';
 
 const Page = () => {
   const [selectedCourseId, setSelectedCourseId] = useState<number>(0);
@@ -35,6 +36,7 @@ const Page = () => {
       <About />
 
       <Testimonials />
+      <Footer />
     </main>
   );
 };

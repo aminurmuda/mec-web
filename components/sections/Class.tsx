@@ -2,149 +2,19 @@
 
 import { useRef } from 'react';
 import Card from '@/components/Card';
-
-export type Course = {
-  id: number;
-  title: string;
-  subtitle: string;
-  description: string;
-  price: string;
-  duration: string;
-  level: string;
-  pax: number;
-  session: number;
-  meetings: number;
-};
-
-export const courses: Course[] = [
-  {
-    id: 1,
-    title: 'Baby Steps Class',
-    subtitle: 'General English Class',
-    description: 'Perfect for beginners who want to start learning English from zero.',
-    price: 'Rp 120.000',
-    duration: '6 Months',
-    level: 'Level A1-B2',
-    pax: 1,
-    session: 30,
-    meetings: 4,
-  },
-  {
-    id: 2,
-    title: 'Focus Class',
-    subtitle: 'Speaking Class',
-    description: 'Improve your speaking confidence in daily conversations.',
-    price: 'Rp 320.000',
-    duration: '6 Months',
-    level: 'Level A1-B2',
-    pax: 1,
-    session: 50,
-    meetings: 4,
-  },
-  {
-    id: 3,
-    title: 'Focus Class',
-    subtitle: 'Reading Class',
-    description: 'Improve your reading skills and comprehension.',
-    price: 'Rp 320.000',
-    duration: '6 Months',
-    level: 'Level A1-B2',
-    pax: 1,
-    session: 50,
-    meetings: 4,
-  },
-  {
-    id: 4,
-    title: 'Focus Class',
-    subtitle: 'Grammar Class',
-    description: 'Improve your grammar skills and understanding.',
-    price: 'Rp 320.000',
-    duration: '6 Months',
-    level: 'Level A1-B2',
-    pax: 1,
-    session: 50,
-    meetings: 4,
-  },
-  {
-    id: 5,
-    title: 'Focus Class',
-    subtitle: 'Writing Class',
-    description: 'Improve your writing skills and composition.',
-    price: 'Rp 320.000',
-    duration: '6 Months',
-    level: 'Level A1-B2',
-    pax: 1,
-    session: 50,
-    meetings: 4,
-  },
-  {
-    id: 6,
-    title: 'Baby Steps Class',
-    subtitle: 'General English Class',
-    description: 'Perfect for beginners who want to start learning English from zero.',
-    price: 'Rp 300.000',
-    duration: '6 Months',
-    level: 'Level A1-B2',
-    pax: 3,
-    session: 30,
-    meetings: 4,
-  },
-  {
-    id: 7,
-    title: 'Focus Class',
-    subtitle: 'Speaking Class',
-    description: 'Improve your speaking confidence in daily conversations.',
-    price: 'Rp 900.000',
-    duration: '6 Months',
-    level: 'Level A1-B2',
-    pax: 3,
-    session: 50,
-    meetings: 4,
-  },
-  {
-    id: 8,
-    title: 'Focus Class',
-    subtitle: 'Reading Class',
-    description: 'Improve your reading skills and comprehension.',
-    price: 'Rp 900.000',
-    duration: '6 Months',
-    level: 'Level A1-B2',
-    pax: 3,
-    session: 50,
-    meetings: 4,
-  },
-  {
-    id: 9,
-    title: 'Focus Class',
-    subtitle: 'Grammar Class',
-    description: 'Improve your grammar skills and understanding.',
-    price: 'Rp 900.000',
-    duration: '6 Months',
-    level: 'Level A1-B2',
-    pax: 3,
-    session: 50,
-    meetings: 4,
-  },
-  {
-    id: 10,
-    title: 'Focus Class',
-    subtitle: 'Writing Class',
-    description: 'Improve your writing skills and composition.',
-    price: 'Rp 900.000',
-    duration: '6 Months',
-    level: 'Level A1-B2',
-    pax: 3,
-    session: 50,
-    meetings: 4,
-  },
-];
+import { Course } from '@/app/page';
 
 interface ClassesSectionProps {
   selectedCourseId: number;
   setSelectedCourseId: (id: number) => void;
+  courses: Course[];
 }
 
-const ClassesSection = ({ selectedCourseId, setSelectedCourseId }: ClassesSectionProps) => {
+const ClassesSection = ({
+  selectedCourseId,
+  setSelectedCourseId,
+  courses,
+}: ClassesSectionProps) => {
   const scrollRef = useRef<HTMLDivElement | null>(null);
   const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
 
@@ -196,26 +66,42 @@ const ClassesSection = ({ selectedCourseId, setSelectedCourseId }: ClassesSectio
           </div>
         </div>
       </div>
-      <div
-        ref={scrollRef}
-        className="flex gap-6 overflow-x-auto scroll-smooth snap-x snap-mandatory no-scrollbar py-4 cursor-grab"
-      >
-        {courses.map((course, index) => (
-          <div
-            key={course.id}
-            ref={(el) => {
-              cardRefs.current[index] = el;
-            }}
-            className={`min-w-[75%] md:min-w-[320px] snap-center ${index === 0 ? 'ml-6' : ''} ${index === courses.length - 1 ? 'mr-6' : ''}`}
-          >
-            <Card
-              course={course}
-              isSelected={selectedCourseId === course.id}
-              onSelect={() => handleSelect(course.id, index)}
-            />
+
+      {courses.length === 0 ? (
+        <div className="max-w-5xl mx-auto px-6 text-center">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {/* Placeholder cards */}
+            {Array.from({ length: 3 }).map((_, i) => (
+              <div key={i} className="bg-white rounded-lg shadow-md p-6 animate-pulse">
+                <div className="h-6 bg-gray-300 rounded w-3/4 mb-4"></div>
+                <div className="h-4 bg-gray-300 rounded w-full mb-2"></div>
+                <div className="h-4 bg-gray-300 rounded w-5/6"></div>
+              </div>
+            ))}
           </div>
-        ))}
-      </div>
+        </div>
+      ) : (
+        <div
+          ref={scrollRef}
+          className="flex gap-6 overflow-x-auto scroll-smooth snap-x snap-mandatory no-scrollbar py-4 cursor-grab"
+        >
+          {courses.map((course, index) => (
+            <div
+              key={course.id}
+              ref={(el) => {
+                cardRefs.current[index] = el;
+              }}
+              className={`min-w-[75%] md:min-w-[320px] snap-center ${index === 0 ? 'ml-6' : ''} ${index === courses.length - 1 ? 'mr-6' : ''}`}
+            >
+              <Card
+                course={course}
+                isSelected={selectedCourseId === course.id}
+                onSelect={() => handleSelect(course.id, index)}
+              />
+            </div>
+          ))}
+        </div>
+      )}
     </section>
   );
 };

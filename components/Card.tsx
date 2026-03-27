@@ -1,5 +1,5 @@
+import { Course } from '@/app/page';
 import ButtonCTA from './Button';
-import { Course } from './sections/Class';
 
 type CardProps = {
   course: Course;
@@ -9,13 +9,20 @@ type CardProps = {
 
 const Card = (props: CardProps) => {
   const { course, isSelected = false, onSelect } = props;
-  const { title, subtitle, description, price, duration, level, pax, session, meetings } = course;
+  const { title, subtitle, description, price, bundling_price, duration, pax, session, meetings } =
+    course;
 
   const handleClick = () => {
     if (onSelect) {
       onSelect(course.id);
     }
   };
+
+  const formatPrice = (value: number) => {
+    if (value === 0) return 'Free';
+    return 'Rp ' + new Intl.NumberFormat('id-ID').format(value);
+  };
+  const finalPrice = bundling_price ? formatPrice(bundling_price) : formatPrice(price);
 
   return (
     <div
@@ -30,18 +37,17 @@ const Card = (props: CardProps) => {
 
         <div className="mt-6">
           <p className="text-xl font-bold text-gray-900">
-            {price}/{pax > 1 ? pax + ' months' : 'month'}
+            {finalPrice}/{pax > 1 ? pax + ' months' : 'month'}
           </p>
         </div>
 
         <p className="mt-6 text-sm text-gray-600">{description}</p>
 
         <div className="space-y-1 text-sm text-gray-600 mt-4">
-          <p>
-            <span className="font-medium">Level:</span> {level}
-          </p>
+          {/* <p><span className="font-medium">Level:</span> {level} </p> */}
           <p>
             <span className="font-medium">Duration:</span> {duration}
+            {duration > 1 ? ' months' : 'month'}
           </p>
           <p>
             <span className="font-medium">Session:</span> {session} mins

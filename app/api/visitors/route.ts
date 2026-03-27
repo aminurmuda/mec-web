@@ -3,15 +3,16 @@ import { NextRequest, NextResponse } from 'next/server';
 
 export const GET = async () => {
   try {
-    const { data, error } = await supabaseServer.from('visitors').select('*');
+    const { count, error } = await supabaseServer
+      .from('visitors')
+      .select('*', { count: 'exact', head: true });
 
     if (error) {
       return NextResponse.json({ error: error.message }, { status: 500 });
     }
 
     return NextResponse.json({
-      total: data.length,
-      visitors: data,
+      total: count || 0,
     });
   } catch (err) {
     return NextResponse.json({ error: 'Unexpected error' }, { status: 500 });
@@ -20,7 +21,7 @@ export const GET = async () => {
 
 export const POST = async (req: NextRequest) => {
   try {
-    const { visitorId } = await req.json();
+    const { visitorId, source } = await req.json();
 
     if (!visitorId) {
       return NextResponse.json({ error: 'Missing visitorId' }, { status: 400 });
@@ -29,7 +30,7 @@ export const POST = async (req: NextRequest) => {
     // insert or ignore duplicate
     const { error } = await supabaseServer
       .from('visitors')
-      .upsert({ visitor_id: visitorId }, { onConflict: 'visitor_id' });
+      .upsert({ visitor_id: visitorId, source }, { onConflict: 'visitor_id' });
 
     if (error) {
       return NextResponse.json({ error: error.message }, { status: 500 });

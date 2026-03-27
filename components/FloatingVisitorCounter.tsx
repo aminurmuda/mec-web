@@ -3,10 +3,13 @@
 import { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { v4 as uuidv4 } from 'uuid';
+import { useSearchParams } from 'next/navigation';
 
 const FloatingVisitorCounter = () => {
   const [count, setCount] = useState<number>(0);
   const [mounted, setMounted] = useState(false);
+  const searchParams = useSearchParams();
+  const source = searchParams.get('source');
 
   useEffect(() => {
     setMounted(true);
@@ -21,7 +24,7 @@ const FloatingVisitorCounter = () => {
         await fetch('/api/visitors', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ visitorId }),
+          body: JSON.stringify({ visitorId, source }),
         });
       }
 
@@ -32,7 +35,7 @@ const FloatingVisitorCounter = () => {
     };
 
     run();
-  }, []);
+  }, [source]);
 
   if (!mounted) return null;
 

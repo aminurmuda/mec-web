@@ -43,8 +43,11 @@ const Page = () => {
         const res = await fetch('/api/courses');
         const data = await res.json();
 
-        setCourses(data.courses || []);
-        console.log('courses', data.courses);
+        const sortedCourses = (data.courses || []).sort((a: Course, b: Course) => {
+          return a.id - b.id;
+        });
+
+        setCourses(sortedCourses);
       } catch (error) {
         console.error('Failed to fetch courses');
       }

@@ -3,19 +3,23 @@
 import { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { v4 as uuidv4 } from 'uuid';
-import { useSearchParams } from 'next/navigation';
 
 const FloatingVisitorCounter = () => {
   const [count, setCount] = useState<number>(0);
   const [mounted, setMounted] = useState(false);
-  const searchParams = useSearchParams();
-  const source = searchParams.get('source');
 
   useEffect(() => {
     setMounted(true);
 
     const run = async () => {
       let visitorId = localStorage.getItem('visitorId');
+
+      let source: string | null = null;
+
+      if (typeof window !== 'undefined') {
+        const params = new URLSearchParams(window.location.search);
+        source = params.get('source');
+      }
 
       if (!visitorId) {
         visitorId = uuidv4();
@@ -35,7 +39,7 @@ const FloatingVisitorCounter = () => {
     };
 
     run();
-  }, [source]);
+  }, []);
 
   if (!mounted) return null;
 

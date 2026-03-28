@@ -27,10 +27,16 @@ export const POST = async (req: NextRequest) => {
       return NextResponse.json({ error: 'Missing visitorId' }, { status: 400 });
     }
 
-    // insert or ignore duplicate
+    const userAgent = req.headers.get('user-agent') || '';
+
+    console.log('userAgent', userAgent);
+
     const { error } = await supabaseServer
       .from('visitors')
-      .upsert({ visitor_id: visitorId, source }, { onConflict: 'visitor_id' });
+      .upsert(
+        { visitor_id: visitorId, source, user_agent: userAgent },
+        { onConflict: 'visitor_id' },
+      );
 
     if (error) {
       return NextResponse.json({ error: error.message }, { status: 500 });

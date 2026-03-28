@@ -54,7 +54,7 @@ const FloatingVisitorCounter = () => {
         boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)',
       }}
     >
-      <p className="px-4 py-2 font-semibold">Total visitor: {count}</p>
+      <p className="px-4 py-2 font-semibold">Total Visitors: {count}</p>
     </div>,
     document.body,
   );

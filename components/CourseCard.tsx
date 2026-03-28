@@ -25,6 +25,10 @@ const CourseCard = (props: CardProps) => {
   };
 
   const finalPrice = formatPrice(selectedPrice?.price);
+  const originalPrice = formatPrice(prices[0].price * selectedPrice.period);
+
+  const isFirstPriceSelected = prices.length > 1 && selectedPriceId === prices[0].id;
+  const showOriginalPrice = isSelected && !isFirstPriceSelected && !originalPrice.includes('Free');
 
   return (
     <Card isSelected={isSelected} onSelect={handleClick}>
@@ -32,7 +36,16 @@ const CourseCard = (props: CardProps) => {
         <h3 className="text-xl font-bold text-brand-primary">{title}</h3>
         <h3 className="text-gray-800 font-semibold">{subtitle}</h3>
 
-        <div className="mt-6">
+        <div className={isFirstPriceSelected ? 'mt-12' : 'mt-6'}>
+          {showOriginalPrice && (
+            <p
+              className="line-through text-gray-400 text-sm font-bold"
+              style={{ marginBottom: '3px' }}
+            >
+              {originalPrice}/
+              {selectedPrice?.period > 1 ? selectedPrice?.period + ' months' : 'month'}
+            </p>
+          )}
           <p className="text-xl font-bold text-gray-900">
             {finalPrice}/{selectedPrice?.period > 1 ? selectedPrice?.period + ' months' : 'month'}
           </p>

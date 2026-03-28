@@ -1,0 +1,63 @@
+import { Course } from '@/app/page';
+import ButtonCTA from './Button';
+import { formatPrice } from './utils';
+import Card from './Card';
+
+type CardProps = {
+  course: Course;
+  isSelected?: boolean;
+  onSelect?: (id: number) => void;
+  selectedPriceId: number;
+  setSelectedPriceId: (id: number) => void;
+};
+
+const CourseCard = (props: CardProps) => {
+  const { course, isSelected = false, onSelect, selectedPriceId, setSelectedPriceId } = props;
+  const { title, subtitle, description, prices, course_duration, session, meetings } = course;
+
+  const selectedPrice = prices.find((price) => price.id === selectedPriceId) ?? prices[0];
+
+  const handleClick = () => {
+    if (onSelect) {
+      setSelectedPriceId(prices[0].id);
+      onSelect(course.id);
+    }
+  };
+
+  const finalPrice = formatPrice(selectedPrice?.price);
+
+  return (
+    <Card isSelected={isSelected} onSelect={handleClick}>
+      <div>
+        <h3 className="text-xl font-bold text-brand-primary">{title}</h3>
+        <h3 className="text-gray-800 font-semibold">{subtitle}</h3>
+
+        <div className="mt-6">
+          <p className="text-xl font-bold text-gray-900">
+            {finalPrice}/{selectedPrice?.period > 1 ? selectedPrice?.period + ' months' : 'month'}
+          </p>
+        </div>
+
+        <p className="mt-6 text-sm text-gray-600">{description}</p>
+
+        <div className="space-y-1 text-sm text-gray-600 mt-4">
+          {/* <p><span className="font-medium">Level:</span> {level} </p> */}
+          <p>
+            <span className="font-medium">Duration:</span> {course_duration}
+            {course_duration > 1 ? ' months' : 'month'}
+          </p>
+          <p>
+            <span className="font-medium">Session:</span> {session} mins
+          </p>
+          <p>{meetings} meetings/month</p>
+        </div>
+      </div>
+
+      <div className="mt-6 flex items-center justify-center">
+        <ButtonCTA fullWidth>Select Course</ButtonCTA>
+      </div>
+    </Card>
+  );
+};
+
+export default CourseCard;

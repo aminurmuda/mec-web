@@ -1,27 +1,17 @@
-import { Course } from '@/app/page';
-import ButtonCTA from './Button';
+import { ReactNode } from 'react';
 
 type CardProps = {
-  course: Course;
   isSelected?: boolean;
-  onSelect?: (id: number) => void;
+  onSelect?: () => void;
+  children: ReactNode;
 };
 
-const Card = (props: CardProps) => {
-  const { course, isSelected = false, onSelect } = props;
-  const { title, subtitle, description, prices, course_duration, session, meetings } = course;
-
+const Card = ({ isSelected, onSelect, children }: CardProps) => {
   const handleClick = () => {
     if (onSelect) {
-      onSelect(course.id);
+      onSelect();
     }
   };
-
-  const formatPrice = (value: number) => {
-    if (value === 0) return 'Free';
-    return 'Rp ' + new Intl.NumberFormat('id-ID').format(value);
-  };
-  const finalPrice = formatPrice(prices[0].price);
 
   return (
     <div
@@ -30,34 +20,7 @@ const Card = (props: CardProps) => {
         ${isSelected ? 'border-blue-200 bg-blue-50 shadow-md scale-105' : 'border-gray-200 bg-white hover:shadow-md hover:scale-105'}
       `}
     >
-      <div>
-        <h3 className="text-xl font-bold text-brand-primary">{title}</h3>
-        <h3 className="text-gray-800 font-semibold">{subtitle}</h3>
-
-        <div className="mt-6">
-          <p className="text-xl font-bold text-gray-900">
-            {finalPrice}/{prices[0].period > 1 ? prices[0].period + ' months' : 'month'}
-          </p>
-        </div>
-
-        <p className="mt-6 text-sm text-gray-600">{description}</p>
-
-        <div className="space-y-1 text-sm text-gray-600 mt-4">
-          {/* <p><span className="font-medium">Level:</span> {level} </p> */}
-          <p>
-            <span className="font-medium">Duration:</span> {course_duration}
-            {course_duration > 1 ? ' months' : 'month'}
-          </p>
-          <p>
-            <span className="font-medium">Session:</span> {session} mins
-          </p>
-          <p>{meetings} meetings/month</p>
-        </div>
-      </div>
-
-      <div className="mt-6 flex items-center justify-center">
-        <ButtonCTA fullWidth>Select Course</ButtonCTA>
-      </div>
+      {children}
     </div>
   );
 };

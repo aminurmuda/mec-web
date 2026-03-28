@@ -29,6 +29,7 @@ export type Course = {
 
 const Page = () => {
   const [selectedCourseId, setSelectedCourseId] = useState<number>(0);
+  const [selectedPriceId, setSelectedPriceId] = useState<number>(0);
 
   const [courses, setCourses] = useState<Course[]>([]);
 
@@ -68,6 +69,8 @@ const Page = () => {
       <Class
         selectedCourseId={selectedCourseId}
         setSelectedCourseId={setSelectedCourseId}
+        selectedPriceId={selectedPriceId}
+        setSelectedPriceId={setSelectedPriceId}
         courses={courses}
       />
 

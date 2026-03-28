@@ -13,3 +13,8 @@ export const scrollTo = (id: string) => {
     behavior: 'smooth',
   });
 };
+
+export const formatPrice = (value: number) => {
+  if (value === 0) return 'Free';
+  return 'Rp ' + new Intl.NumberFormat('id-ID').format(value);
+};

@@ -1,22 +1,29 @@
 'use client';
 
 import { useRef } from 'react';
-import Card from '@/components/Card';
 import { Course } from '@/app/page';
+import CourseCard from '../CourseCard';
+import PriceCard from '../PriceCard';
 
 interface ClassesSectionProps {
   selectedCourseId: number;
   setSelectedCourseId: (id: number) => void;
+  selectedPriceId: number;
+  setSelectedPriceId: (id: number) => void;
   courses: Course[];
 }
 
 const ClassesSection = ({
   selectedCourseId,
   setSelectedCourseId,
+  selectedPriceId,
+  setSelectedPriceId,
   courses,
 }: ClassesSectionProps) => {
   const scrollRef = useRef<HTMLDivElement | null>(null);
   const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
+
+  const selectedCourse = courses.find((course) => course.id === selectedCourseId);
 
   const scrollLeft = () => {
     if (!scrollRef.current) return;
@@ -37,6 +44,12 @@ const ClassesSection = ({
       cardEl.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
     }
   };
+
+  const showPriceCards =
+    selectedCourseId !== 0 &&
+    selectedCourse &&
+    selectedCourse?.prices?.length > 0 &&
+    selectedCourse?.prices[0]?.price > 0;
 
   return (
     <section id="courses" className="bg-brand-bg py-20">
@@ -99,14 +112,35 @@ const ClassesSection = ({
                 }}
                 className={`min-w-[75%] md:min-w-[320px] snap-center ${index === 0 ? 'ml-6' : ''} ${index === courses.length - 1 ? 'mr-6' : ''}`}
               >
-                <Card
+                <CourseCard
                   course={course}
                   isSelected={selectedCourseId === course.id}
                   onSelect={() => handleSelect(course.id, index)}
+                  selectedPriceId={selectedPriceId}
+                  setSelectedPriceId={setSelectedPriceId}
                 />
               </div>
             ))}
       </div>
+
+      {showPriceCards && (
+        <div className="max-w-6xl mx-auto flex gap-6 overflow-x-auto scroll-smooth snap-x snap-mandatory no-scrollbar py-4 cursor-grab">
+          {selectedCourse?.prices.map((price, index) => {
+            return (
+              <div
+                key={price.id}
+                className={`min-w-[75%] md:min-w-[320px] snap-center ${index === 0 ? 'ml-6' : ''} ${index === courses.length - 1 ? 'mr-6' : ''}`}
+              >
+                <PriceCard
+                  price={price}
+                  selectedPriceId={selectedPriceId}
+                  setSelectedPriceId={setSelectedPriceId}
+                />
+              </div>
+            );
+          })}
+        </div>
+      )}
     </section>
   );
 };

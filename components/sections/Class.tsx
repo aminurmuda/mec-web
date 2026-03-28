@@ -75,8 +75,8 @@ const ClassesSection = ({
           ? Array.from({ length: 4 }).map((_, i) => (
               <div
                 key={i}
-                className={`bg-white rounded-lg shadow-md p-6 animate-pulse h-100 flex flex-col justify-between ${i === 0 ? 'ml-6' : ''} ${i === 2 ? 'mr-6' : ''}`}
-                style={{ height: '438px', minWidth: '320px' }}
+                className={`bg-white rounded-lg shadow-md p-6 animate-pulse h-100 flex flex-col justify-between min-w-[75%] md:min-w-[320px] snap-center ${i === 0 ? 'ml-6' : ''} ${i === 2 ? 'mr-6' : ''}`}
+                style={{ height: '438px' }}
               >
                 <div>
                   <div className="h-6 bg-gray-300 rounded w-5/6 mb-4"></div>

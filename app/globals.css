@@ -36,3 +36,7 @@
 .no-scrollbar {
   scrollbar-width: none;
 }
+
+.h-button {
+  height: 48px;
+}

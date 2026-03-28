@@ -67,50 +67,46 @@ const ClassesSection = ({
         </div>
       </div>
 
-      {courses.length === 0 ? (
-        <div className="max-w-5xl mx-auto px-6 text-center">
-          <div className="flex items-center gap-6">
-            {Array.from({ length: 3 }).map((_, i) => (
+      <div
+        ref={scrollRef}
+        className="max-w-6xl mx-auto flex gap-6 overflow-x-auto scroll-smooth snap-x snap-mandatory no-scrollbar py-4 cursor-grab"
+      >
+        {courses.length === 0
+          ? Array.from({ length: 4 }).map((_, i) => (
               <div
                 key={i}
-                className="bg-white rounded-lg shadow-md p-6 animate-pulse h-100 flex flex-col justify-between"
-                style={{ height: '466px', minWidth: '320px' }}
+                className={`bg-white rounded-lg shadow-md p-6 animate-pulse h-100 flex flex-col justify-between ${i === 0 ? 'ml-6' : ''} ${i === 2 ? 'mr-6' : ''}`}
+                style={{ height: '438px', minWidth: '320px' }}
               >
                 <div>
                   <div className="h-6 bg-gray-300 rounded w-5/6 mb-4"></div>
-                  <div className="h-4 bg-gray-300 rounded w-3/4 mb-6"></div>
+                  <div className="h-4 bg-gray-300 rounded w-3/4 mb-10"></div>
                   <div className="h-6 bg-gray-300 rounded w-full mb-10"></div>
+                  <div className="h-4 bg-gray-300 rounded w-full mb-2"></div>
+                  <div className="h-4 bg-gray-300 rounded w-full mb-4"></div>
                   <div className="h-4 bg-gray-300 rounded w-5/6 mb-2"></div>
                   <div className="h-4 bg-gray-300 rounded w-5/6 mb-2"></div>
                   <div className="h-4 bg-gray-300 rounded w-5/6 mb-2"></div>
                 </div>
-                <div className="h-10 bg-gray-300 rounded-lg w-full"></div>
+                <div className="h-button bg-gray-300 rounded-lg w-full"></div>
+              </div>
+            ))
+          : courses.map((course, index) => (
+              <div
+                key={course.id}
+                ref={(el) => {
+                  cardRefs.current[index] = el;
+                }}
+                className={`min-w-[75%] md:min-w-[320px] snap-center ${index === 0 ? 'ml-6' : ''} ${index === courses.length - 1 ? 'mr-6' : ''}`}
+              >
+                <Card
+                  course={course}
+                  isSelected={selectedCourseId === course.id}
+                  onSelect={() => handleSelect(course.id, index)}
+                />
               </div>
             ))}
-          </div>
-        </div>
-      ) : (
-        <div
-          ref={scrollRef}
-          className="flex gap-6 overflow-x-auto scroll-smooth snap-x snap-mandatory no-scrollbar py-4 cursor-grab"
-        >
-          {courses.map((course, index) => (
-            <div
-              key={course.id}
-              ref={(el) => {
-                cardRefs.current[index] = el;
-              }}
-              className={`min-w-[75%] md:min-w-[320px] snap-center ${index === 0 ? 'ml-6' : ''} ${index === courses.length - 1 ? 'mr-6' : ''}`}
-            >
-              <Card
-                course={course}
-                isSelected={selectedCourseId === course.id}
-                onSelect={() => handleSelect(course.id, index)}
-              />
-            </div>
-          ))}
-        </div>
-      )}
+      </div>
     </section>
   );
 };

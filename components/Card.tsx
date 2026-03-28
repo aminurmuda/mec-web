@@ -9,8 +9,7 @@ type CardProps = {
 
 const Card = (props: CardProps) => {
   const { course, isSelected = false, onSelect } = props;
-  const { title, subtitle, description, price, bundling_price, duration, pax, session, meetings } =
-    course;
+  const { title, subtitle, description, prices, course_duration, session, meetings } = course;
 
   const handleClick = () => {
     if (onSelect) {
@@ -22,7 +21,7 @@ const Card = (props: CardProps) => {
     if (value === 0) return 'Free';
     return 'Rp ' + new Intl.NumberFormat('id-ID').format(value);
   };
-  const finalPrice = bundling_price ? formatPrice(bundling_price) : formatPrice(price);
+  const finalPrice = formatPrice(prices[0].price);
 
   return (
     <div
@@ -37,7 +36,7 @@ const Card = (props: CardProps) => {
 
         <div className="mt-6">
           <p className="text-xl font-bold text-gray-900">
-            {finalPrice}/{pax > 1 ? pax + ' months' : 'month'}
+            {finalPrice}/{prices[0].period > 1 ? prices[0].period + ' months' : 'month'}
           </p>
         </div>
 
@@ -46,8 +45,8 @@ const Card = (props: CardProps) => {
         <div className="space-y-1 text-sm text-gray-600 mt-4">
           {/* <p><span className="font-medium">Level:</span> {level} </p> */}
           <p>
-            <span className="font-medium">Duration:</span> {duration}
-            {duration > 1 ? ' months' : 'month'}
+            <span className="font-medium">Duration:</span> {course_duration}
+            {course_duration > 1 ? ' months' : 'month'}
           </p>
           <p>
             <span className="font-medium">Session:</span> {session} mins

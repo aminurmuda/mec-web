@@ -3,7 +3,27 @@ import { NextResponse } from 'next/server';
 
 export const GET = async () => {
   try {
-    const { data, error } = await supabaseServer.from('courses').select('*');
+    const { data, error } = await supabaseServer
+      .from('courses')
+      .select(
+        `
+    id,
+    title,
+    subtitle,
+    description,
+    session,
+    meetings,
+    course_duration,
+    prices (
+      id,
+      period,
+      price
+    )
+  `,
+      )
+      .lte('id', 9)
+      .eq('prices.soft_delete', false)
+      .order('id', { ascending: true });
 
     if (error) {
       return NextResponse.json({ error: error.message }, { status: 500 });

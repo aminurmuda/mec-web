@@ -10,18 +10,21 @@ import Class from '@/components/sections/Class';
 import { useEffect, useState } from 'react';
 import Footer from '@/components/sections/Footer';
 
+export type Price = {
+  id: number;
+  period: number;
+  price: number;
+};
+
 export type Course = {
   id: number;
   title: string;
   subtitle: string;
   description: string;
-  price: number;
-  bundling_price: number;
-  duration: number;
-  // level?: string;
-  pax: number;
   session: number;
   meetings: number;
+  course_duration: number;
+  prices: Price[];
 };
 
 const Page = () => {

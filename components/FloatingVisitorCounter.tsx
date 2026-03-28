@@ -44,10 +44,17 @@ const FloatingVisitorCounter = () => {
   if (!mounted) return null;
 
   return createPortal(
-    <div style={{ position: 'fixed', bottom: '24px', right: '24px', zIndex: 9999 }}>
-      <div className="bg-brand-bg px-4 py-2 rounded-lg shadow-xl font-semibold">
-        Total visitor: {count}
-      </div>
+    <div
+      className="shadow-lg rounded-lg bg-brand-bg"
+      style={{
+        position: 'fixed',
+        bottom: '24px',
+        right: '24px',
+        zIndex: 9999,
+        boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)',
+      }}
+    >
+      <p className="px-4 py-2 font-semibold">Total visitor: {count}</p>
     </div>,
     document.body,
   );

@@ -12,7 +12,7 @@ const ButtonCTA = ({
 }) => {
   return (
     <button
-      onClick={() => scrollTo('registration')}
+      onClick={() => scrollTo('price-cards')}
       className={`px-8 py-3 bg-brand-primary text-white rounded-lg hover:opacity-90 font-bold ${fullWidth ? 'w-full' : ''}`}
     >
       {children}

@@ -16,5 +16,6 @@ export const scrollTo = (id: string) => {
 
 export const formatPrice = (value: number) => {
   if (value === 0) return 'Free';
-  return 'Rp ' + new Intl.NumberFormat('id-ID').format(value);
+  const roundedValue = Math.round(value);
+  return 'Rp ' + new Intl.NumberFormat('id-ID').format(roundedValue);
 };

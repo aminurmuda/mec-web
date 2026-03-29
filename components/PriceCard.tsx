@@ -15,7 +15,7 @@ const PriceCard = ({ price, selectedPriceId, setSelectedPriceId }: PriceCardProp
   }, [selectedPriceId]);
   return (
     <Card isSelected={price.id === selectedPriceId} onSelect={() => setSelectedPriceId(price.id)}>
-      <p>
+      <p className="text-sm">
         {price.period} {price.period === 1 ? 'month package' : 'month packages'}
       </p>
       <p className="font-extrabold">{formatPrice(price.price)}</p>

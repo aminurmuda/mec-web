@@ -22,6 +22,7 @@ const ClassesSection = ({
 }: ClassesSectionProps) => {
   const scrollRef = useRef<HTMLDivElement | null>(null);
   const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const priceCardRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   const selectedCourse = courses.find((course) => course.id === selectedCourseId);
 
@@ -35,7 +36,7 @@ const ClassesSection = ({
     scrollRef.current.scrollBy({ left: 320, behavior: 'smooth' });
   };
 
-  const handleSelect = (id: number, index: number) => {
+  const handleSelectCourse = (id: number, index: number) => {
     setSelectedCourseId(id);
 
     // Scroll selected card into view
@@ -45,11 +46,18 @@ const ClassesSection = ({
     }
   };
 
+  const handleSelectPrice = (id: number, index: number) => {
+    setSelectedPriceId(id);
+
+    // Scroll selected card into view
+    const cardEl = priceCardRefs.current[index];
+    if (cardEl && scrollRef.current) {
+      cardEl.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+    }
+  };
+
   const showPriceCards =
-    selectedCourseId !== 0 &&
-    selectedCourse &&
-    selectedCourse?.prices?.length > 0 &&
-    selectedCourse?.prices[0]?.price > 0;
+    selectedCourseId !== 0 && selectedCourse && selectedCourse?.prices?.length > 0;
 
   return (
     <section id="courses" className="bg-brand-bg py-20">
@@ -115,7 +123,7 @@ const ClassesSection = ({
                 <CourseCard
                   course={course}
                   isSelected={selectedCourseId === course.id}
-                  onSelect={() => handleSelect(course.id, index)}
+                  onSelect={() => handleSelectCourse(course.id, index)}
                   selectedPriceId={selectedPriceId}
                   setSelectedPriceId={setSelectedPriceId}
                 />
@@ -124,17 +132,23 @@ const ClassesSection = ({
       </div>
 
       {showPriceCards && (
-        <div className="max-w-6xl mx-auto flex gap-6 overflow-x-auto scroll-smooth snap-x snap-mandatory no-scrollbar py-4 cursor-grab">
+        <div
+          id="price-cards"
+          className="max-w-6xl mx-auto flex gap-6 overflow-x-auto scroll-smooth snap-x snap-mandatory no-scrollbar py-4 cursor-grab"
+        >
           {selectedCourse?.prices.map((price, index) => {
             return (
               <div
                 key={price.id}
-                className={`min-w-[75%] md:min-w-[320px] snap-center ${index === 0 ? 'ml-6' : ''} ${index === courses.length - 1 ? 'mr-6' : ''}`}
+                ref={(el) => {
+                  priceCardRefs.current[index] = el;
+                }}
+                className={`min-w-[50%] md:min-w-[320px] snap-center ${index === 0 ? 'ml-6' : ''} ${index === courses.length - 1 ? 'mr-6' : ''}`}
               >
                 <PriceCard
                   price={price}
                   selectedPriceId={selectedPriceId}
-                  setSelectedPriceId={setSelectedPriceId}
+                  setSelectedPriceId={() => handleSelectPrice(price.id, index)}
                 />
               </div>
             );

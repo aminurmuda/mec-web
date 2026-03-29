@@ -24,8 +24,8 @@ const CourseCard = (props: CardProps) => {
     }
   };
 
-  const finalPrice = formatPrice(selectedPrice?.price);
-  const originalPrice = formatPrice(prices[0].price * selectedPrice.period);
+  const finalPrice = formatPrice(selectedPrice?.price / selectedPrice.period);
+  const originalPrice = formatPrice(prices[0].price);
 
   const isFirstPriceSelected = prices.length > 1 && selectedPriceId === prices[0].id;
   const showOriginalPrice = isSelected && !isFirstPriceSelected && !originalPrice.includes('Free');
@@ -42,12 +42,13 @@ const CourseCard = (props: CardProps) => {
               className="line-through text-gray-400 text-sm font-bold"
               style={{ marginBottom: '3px' }}
             >
-              {originalPrice}/
-              {selectedPrice?.period > 1 ? selectedPrice?.period + ' months' : 'month'}
+              {originalPrice}/month
+              {/* {selectedPrice?.period > 1 ? selectedPrice?.period + ' months' : 'month'} */}
             </p>
           )}
           <p className="text-xl font-bold text-gray-900">
-            {finalPrice}/{selectedPrice?.period > 1 ? selectedPrice?.period + ' months' : 'month'}
+            {finalPrice}/month
+            {/* {selectedPrice?.period > 1 ? selectedPrice?.period + ' months' : 'month'} */}
           </p>
         </div>
 

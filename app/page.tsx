@@ -53,7 +53,7 @@ const Page = () => {
     if (!price) {
       return '';
     }
-    return `for ${price?.period === 1 ? ' a month' : ' months'} (${formatPrice(price?.price)})`;
+    return `for ${price?.period === 1 ? ' a month' : price?.period + ' months'} (${formatPrice(price?.price)})`;
   };
 
   useEffect(() => {

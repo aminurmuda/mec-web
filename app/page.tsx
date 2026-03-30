@@ -9,6 +9,7 @@ import Testimonials from '@/components/sections/Testimonials';
 import Class from '@/components/sections/Class';
 import { useEffect, useState } from 'react';
 import Footer from '@/components/sections/Footer';
+import { formatPrice } from '@/components/utils';
 
 export type Price = {
   id: number;
@@ -33,12 +34,26 @@ const Page = () => {
 
   const [courses, setCourses] = useState<Course[]>([]);
 
+  const findCourse = (id: number) => {
+    return courses.find((course) => course.id === id);
+  };
+
   const getSelectedCourse = () => {
-    const course = courses.find((course) => course.id === selectedCourseId);
+    const course = findCourse(selectedCourseId);
     if (!course) {
       return '';
     }
-    return `${course?.title} (${course?.subtitle}) ${course?.id}`;
+    return `${course?.title} (${course?.subtitle})`;
+  };
+
+  const getSelectedPrice = () => {
+    const price = findCourse(selectedCourseId)?.prices.find(
+      (price) => price.id === selectedPriceId,
+    );
+    if (!price) {
+      return '';
+    }
+    return `for ${price?.period === 1 ? ' a month' : ' months'} (${formatPrice(price?.price)})`;
   };
 
   useEffect(() => {
@@ -74,7 +89,7 @@ const Page = () => {
         courses={courses}
       />
 
-      <Registration selectedCourse={getSelectedCourse()} />
+      <Registration selectedCourse={getSelectedCourse()} selectedPrice={getSelectedPrice()} />
 
       <Insights />
 

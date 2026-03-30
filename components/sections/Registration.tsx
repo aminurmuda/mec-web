@@ -4,9 +4,10 @@ import { useState } from 'react';
 
 interface RegistrationProps {
   selectedCourse: string;
+  selectedPrice: string;
 }
 
-const Registration = ({ selectedCourse }: RegistrationProps) => {
+const Registration = ({ selectedCourse, selectedPrice }: RegistrationProps) => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
@@ -20,7 +21,7 @@ Email: ${email}
 Phone: ${phone}
 Age: ${age}
 Background: ${background}
-Course: ${selectedCourse}`;
+Course: ${selectedCourse} ${selectedPrice}`;
     const encodedMessage = encodeURIComponent(message);
     window.open(
       `https://wa.me/62${process.env.NEXT_PUBLIC_PHONE_NUMBER}?text=${encodedMessage}`,

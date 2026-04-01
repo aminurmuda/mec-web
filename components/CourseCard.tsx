@@ -36,29 +36,26 @@ const CourseCard = (props: CardProps) => {
         <h3 className="text-xl font-bold text-brand-primary">{title}</h3>
         <h3 className="text-gray-800 font-semibold">{subtitle}</h3>
 
-        <div className={isFirstPriceSelected ? 'mt-12' : 'mt-6'}>
+        <div className={isFirstPriceSelected || finalPrice.includes('Free') ? 'mt-12' : 'mt-6'}>
           {showOriginalPrice && (
             <p
               className="line-through text-gray-400 text-sm font-bold"
               style={{ marginBottom: '3px' }}
             >
               {originalPrice}/month
-              {/* {selectedPrice?.period > 1 ? selectedPrice?.period + ' months' : 'month'} */}
             </p>
           )}
-          <p className="text-xl font-bold text-gray-900">
-            {finalPrice}/month
-            {/* {selectedPrice?.period > 1 ? selectedPrice?.period + ' months' : 'month'} */}
+          <p className={`text-xl font-bold text-gray-900 ${!isSelected && 'mt-12'}`}>
+            {!finalPrice.includes('Free') ? finalPrice + '/month' : finalPrice}
           </p>
         </div>
 
         <p className="mt-6 text-sm text-gray-600">{description}</p>
 
         <div className="space-y-1 text-sm text-gray-600 mt-4">
-          {/* <p><span className="font-medium">Level:</span> {level} </p> */}
           <p>
             <span className="font-medium">Duration:</span> {course_duration}
-            {course_duration > 1 ? ' months' : 'month'}
+            {course_duration > 1 ? ' months' : ' month'}
           </p>
           <p>
             <span className="font-medium">Session:</span> {session} mins

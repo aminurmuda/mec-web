@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { supabaseServer } from '@/lib/supabase-server';
+import { resend } from '@/lib/resend';
 
 type RegisterPayload = {
   name: string;
@@ -42,6 +43,17 @@ export const POST = async (req: NextRequest) => {
 
       return NextResponse.json({ success: false, error: error.message }, { status: 500 });
     }
+
+    await resend.emails.send({
+      from: `Medeena English Center <${process.env.RESEND_SENDER_EMAIL}>`,
+      to: body.email,
+      subject: 'Registration Received 🎉',
+      html: `
+        <h2>Hello ${body.name},</h2>
+        <p>Thank you for registering.</p>
+        <p>We will contact you soon via WhatsApp.</p>
+      `,
+    });
 
     return NextResponse.json({
       success: true,

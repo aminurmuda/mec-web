@@ -26,6 +26,7 @@ export type Course = {
   meetings: number;
   course_duration: number;
   prices: Price[];
+  order: number;
 };
 
 const Page = () => {
@@ -63,7 +64,7 @@ const Page = () => {
         const data = await res.json();
 
         const sortedCourses = (data.courses || []).sort((a: Course, b: Course) => {
-          return a.id - b.id;
+          return a.order - b.order;
         });
 
         setCourses(sortedCourses);

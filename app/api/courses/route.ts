@@ -8,6 +8,7 @@ export const GET = async () => {
       .select(
         `
     id,
+    order,
     title,
     subtitle,
     description,

@@ -1,6 +1,5 @@
 'use client';
 
-import { submitToGoogleSheets } from '@/utils/google-sheets';
 import { useState } from 'react';
 
 interface RegistrationProps {

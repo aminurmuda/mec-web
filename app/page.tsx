@@ -89,7 +89,12 @@ const Page = () => {
         courses={courses}
       />
 
-      <Registration selectedCourse={getSelectedCourse()} selectedPrice={getSelectedPrice()} />
+      <Registration
+        selectedCourse={getSelectedCourse()}
+        selectedPrice={getSelectedPrice()}
+        selectedCourseId={selectedCourseId}
+        selectedPriceId={selectedPriceId}
+      />
 
       <Insights />
 

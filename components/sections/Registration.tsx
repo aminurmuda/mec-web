@@ -1,32 +1,72 @@
 'use client';
 
+import { submitToGoogleSheets } from '@/utils/google-sheets';
 import { useState } from 'react';
 
 interface RegistrationProps {
+  selectedCourseId: number;
+  selectedPriceId: number;
   selectedCourse: string;
   selectedPrice: string;
 }
 
-const Registration = ({ selectedCourse, selectedPrice }: RegistrationProps) => {
+const Registration = ({
+  selectedCourse,
+  selectedPrice,
+  selectedCourseId,
+  selectedPriceId,
+}: RegistrationProps) => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
   const [background, setBackground] = useState('');
-  const [age, setAge] = useState<string>('');
+  const [age, setAge] = useState<number | string>('');
 
-  const handleSubmit = () => {
+  const sentToWhatsApp = async () => {
     const message = `Hello, I want to register:
-Name: ${name}
-Email: ${email}
-Phone: ${phone}
-Age: ${age}
-Background: ${background}
-Course: ${selectedCourse} ${selectedPrice}`;
+    Name: ${name}
+    Email: ${email}
+    Phone: ${phone}
+    Age: ${age}
+    Background: ${background}
+    Course: ${selectedCourse} ${selectedPrice}`;
     const encodedMessage = encodeURIComponent(message);
     window.open(
       `https://wa.me/62${process.env.NEXT_PUBLIC_PHONE_NUMBER}?text=${encodedMessage}`,
       '_blank',
     );
+  };
+
+  const handleSubmit = async () => {
+    try {
+      const payload = {
+        name,
+        email,
+        phone,
+        age,
+        background,
+        course_id: selectedCourseId,
+        price_id: selectedPriceId,
+      };
+
+      const res = await fetch('/api/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+
+      const result = await res.json();
+
+      if (!res.ok) {
+        alert(result.error || 'Something went wrong');
+        return;
+      } else {
+        sentToWhatsApp();
+      }
+    } catch (error) {
+      console.error(error);
+      alert('Network error');
+    }
   };
 
   return (

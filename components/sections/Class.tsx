@@ -96,7 +96,7 @@ const ClassesSection = ({
           ? Array.from({ length: 4 }).map((_, i) => (
               <div
                 key={i}
-                className={`bg-white rounded-lg shadow-md p-6 animate-pulse h-100 flex flex-col justify-between min-w-[75%] md:min-w-[320px] snap-center ${i === 0 ? 'ml-6' : ''} ${i === 2 ? 'mr-6' : ''}`}
+                className={`bg-white rounded-lg shadow-md p-6 animate-pulse h-100 flex flex-col justify-between min-w-[75%] md:min-w-[320px] snap-center ${i === 0 ? 'ml-6' : ''} ${i === 3 ? 'mr-6' : ''}`}
                 style={{ height: '438px' }}
               >
                 <div>

@@ -59,11 +59,17 @@ export const POST = async (req: NextRequest) => {
         
         <!-- LOGO -->
         <div style="margin-bottom:24px;">
-          <img 
-            src="https://medeenaenglishcenter.com/logo.png" 
-            alt="Medeena English"
-            style="display:block;"
-          />
+          <a 
+            href="https://medeenaenglishcenter.com" 
+            target="_blank"
+            style="display:inline-block;"
+          >
+            <img 
+              src="https://medeenaenglishcenter.com/logo.png" 
+              alt="Medeena English"
+              style="display:block;border:0;outline:none;text-decoration:none;"
+            />
+          </a>
         </div>
 
         <!-- HEADER -->

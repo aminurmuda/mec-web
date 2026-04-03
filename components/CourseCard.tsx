@@ -31,7 +31,7 @@ const CourseCard = (props: CardProps) => {
   const showOriginalPrice = isSelected && !isFirstPriceSelected && !originalPrice.includes('Free');
 
   return (
-    <Card isSelected={isSelected} onSelect={handleClick}>
+    <Card isSelected={isSelected} onSelect={handleClick} config={course.config}>
       <div>
         <h3 className="text-xl font-bold text-brand-primary">{title}</h3>
         <h3 className="text-gray-800 font-semibold">{subtitle}</h3>

@@ -15,6 +15,7 @@ export const GET = async () => {
     session,
     meetings,
     course_duration,
+    config,
     prices (
       id,
       period,

@@ -10,6 +10,7 @@ import Class from '@/components/sections/Class';
 import { useEffect, useState } from 'react';
 import Footer from '@/components/sections/Footer';
 import { formatPrice } from '@/components/utils';
+import { CardConfig } from '@/components/Card';
 
 export type Price = {
   id: number;
@@ -27,6 +28,7 @@ export type Course = {
   course_duration: number;
   prices: Price[];
   order: number;
+  config?: CardConfig;
 };
 
 const Page = () => {

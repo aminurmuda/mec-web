@@ -61,7 +61,7 @@ export const POST = async (req: NextRequest) => {
         <!-- LOGO -->
         <div style="margin-bottom:24px;">
           <img 
-            src="https://medeenaenglishcenter.com/logo.png" 
+            src="https://medeenaenglishcenter.com/logo.webp" 
             alt="Medeena English"
             style="display:block;"
           />

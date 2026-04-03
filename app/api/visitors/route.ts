@@ -35,8 +35,6 @@ export const POST = async (req: NextRequest) => {
 
     const userAgent = req.headers.get('user-agent') || '';
 
-    console.log('userAgent', userAgent);
-
     const { error } = await supabaseServer
       .from('visitors')
       .upsert(

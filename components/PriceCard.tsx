@@ -10,9 +10,6 @@ interface PriceCardProps {
 }
 
 const PriceCard = ({ price, selectedPriceId, setSelectedPriceId }: PriceCardProps) => {
-  useEffect(() => {
-    console.log('selectedPriceId', selectedPriceId);
-  }, [selectedPriceId]);
   return (
     <Card isSelected={price.id === selectedPriceId} onSelect={() => setSelectedPriceId(price.id)}>
       <p className="text-sm">

@@ -19,7 +19,9 @@ const Registration = ({
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
   const [background, setBackground] = useState('');
+  const [address, setAddress] = useState('');
   const [age, setAge] = useState<number | string>('');
+  const [loading, setLoading] = useState(false);
 
   const sentToWhatsApp = async () => {
     const message = `Hello, I want to register:
@@ -36,7 +38,20 @@ const Registration = ({
     );
   };
 
+  const resetForm = () => {
+    setName('');
+    setEmail('');
+    setPhone('');
+    setAge('');
+    setBackground('');
+    setAddress('');
+  };
+
+  const isDisabled = !name || !email || !phone || !age || !background || !address || loading;
+
   const handleSubmit = async () => {
+    setLoading(true);
+
     try {
       const payload = {
         name,
@@ -44,8 +59,11 @@ const Registration = ({
         phone,
         age,
         background,
+        address,
         course_id: selectedCourseId,
         price_id: selectedPriceId,
+        selectedCourse,
+        selectedPrice,
       };
 
       const res = await fetch('/api/register', {
@@ -59,12 +77,15 @@ const Registration = ({
       if (!res.ok) {
         alert(result.error || 'Something went wrong');
         return;
-      } else {
-        sentToWhatsApp();
       }
+
+      sentToWhatsApp();
     } catch (error) {
       console.error(error);
       alert('Network error');
+    } finally {
+      setLoading(false);
+      resetForm();
     }
   };
 
@@ -101,6 +122,13 @@ const Registration = ({
             className="w-full mb-6 px-4 py-2 border border-gray-200 bg-white rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
           />
           <input
+            type="text"
+            placeholder="Address"
+            value={address}
+            onChange={(e) => setAddress(e.target.value)}
+            className="w-full mb-6 px-4 py-2 border border-gray-200 bg-white rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
+          />
+          <input
             type="number"
             placeholder="Age"
             value={age}
@@ -115,11 +143,15 @@ const Registration = ({
             className="w-full mb-6 px-4 py-2 border border-gray-200 bg-white rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
           />
           <button
-            disabled={!name || !email || !phone || !age || !background}
+            disabled={isDisabled}
             onClick={handleSubmit}
-            className="w-full px-6 py-3 bg-brand-primary disabled:opacity-50 text-white font-bold rounded hover:opacity-90"
+            className="w-full px-6 py-3 bg-brand-primary disabled:opacity-50 text-white font-bold rounded hover:opacity-90 flex items-center justify-center gap-2"
           >
-            Enroll Now
+            {loading && (
+              <span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
+            )}
+            {loading && <span>Submitting...</span>}
+            {!loading && <span>Enroll Now</span>}
           </button>
         </div>
       </div>

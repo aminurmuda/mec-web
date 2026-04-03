@@ -78,9 +78,7 @@ const Registration = ({
 
       if (res.ok) {
         resetForm();
-        if (process.env.ENABLE_WHATSAPP === 'true') {
-          sentToWhatsApp();
-        }
+        sentToWhatsApp();
         router.push('/thank-you');
       } else {
         alert(result.error || 'Something went wrong');

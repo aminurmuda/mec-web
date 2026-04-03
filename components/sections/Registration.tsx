@@ -1,5 +1,6 @@
 'use client';
 
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
 interface RegistrationProps {
@@ -15,6 +16,7 @@ const Registration = ({
   selectedCourseId,
   selectedPriceId,
 }: RegistrationProps) => {
+  const router = useRouter();
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
@@ -74,18 +76,21 @@ const Registration = ({
 
       const result = await res.json();
 
-      if (!res.ok) {
+      if (res.ok) {
+        resetForm();
+        if (process.env.ENABLE_WHATSAPP === 'true') {
+          sentToWhatsApp();
+        }
+        router.push('/thank-you');
+      } else {
         alert(result.error || 'Something went wrong');
         return;
       }
-
-      sentToWhatsApp();
     } catch (error) {
       console.error(error);
       alert('Network error');
     } finally {
       setLoading(false);
-      resetForm();
     }
   };
 

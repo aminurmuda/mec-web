@@ -32,7 +32,11 @@ const FloatingVisitorCounter = () => {
         });
       }
 
-      const res = await fetch('/api/visitors');
+      const res = await fetch('/api/visitors', {
+        headers: {
+          'x-api-key': process.env.NEXT_PUBLIC_API_KEY || '',
+        },
+      });
       const data = await res.json();
 
       setCount(data.total || 0);

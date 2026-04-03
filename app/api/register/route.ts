@@ -51,7 +51,6 @@ export const POST = async (req: NextRequest) => {
     await resend.emails.send({
       from: `Medeena English Center <${process.env.RESEND_SENDER_EMAIL}>`,
       to: body.email,
-      cc: process.env.RESEND_CC_EMAIL,
       subject: 'Registration Confirmation – Medeena English Center',
       html: `
     <div style="background:#f9fafb;padding:40px 20px;font-family:Inter,Arial,sans-serif;">
@@ -61,7 +60,7 @@ export const POST = async (req: NextRequest) => {
         <!-- LOGO -->
         <div style="margin-bottom:24px;">
           <img 
-            src="https://medeenaenglishcenter.com/logo.webp" 
+            src="https://medeenaenglishcenter.com/logo.png" 
             alt="Medeena English"
             style="display:block;"
           />

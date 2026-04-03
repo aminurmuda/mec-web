@@ -62,7 +62,12 @@ const Page = () => {
   useEffect(() => {
     const fetchCourses = async () => {
       try {
-        const res = await fetch('/api/courses');
+        const res = await fetch('/api/courses', {
+          headers: {
+            'x-api-key': process.env.NEXT_PUBLIC_API_KEY || '',
+          },
+        });
+
         const data = await res.json();
 
         const sortedCourses = (data.courses || []).sort((a: Course, b: Course) => {

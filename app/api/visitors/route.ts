@@ -1,7 +1,13 @@
 import { supabaseServer } from '@/lib/supabase-server';
 import { NextRequest, NextResponse } from 'next/server';
 
-export const GET = async () => {
+export const GET = async (req: Request) => {
+  const apiKey = req.headers.get('x-api-key');
+
+  if (apiKey !== process.env.INTERNAL_API_KEY) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+  }
+
   try {
     const { count, error } = await supabaseServer
       .from('visitors')

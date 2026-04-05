@@ -35,6 +35,15 @@ export const POST = async (req: NextRequest) => {
 
     const userAgent = req.headers.get('user-agent') || '';
 
+    const isBot =
+      userAgent.toLowerCase().includes('headless') ||
+      userAgent.toLowerCase().includes('bot') ||
+      userAgent.toLowerCase().includes('crawler');
+
+    if (isBot) {
+      return NextResponse.json({ success: true });
+    }
+
     const { error } = await supabaseServer
       .from('visitors')
       .upsert(

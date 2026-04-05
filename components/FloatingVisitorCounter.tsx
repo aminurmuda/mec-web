@@ -54,7 +54,7 @@ const FloatingVisitorCounter = () => {
         position: 'fixed',
         bottom: '24px',
         right: '24px',
-        zIndex: 9999,
+        zIndex: 50,
         boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)',
       }}
     >

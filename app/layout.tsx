@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
 import './globals.css';
 import FloatingVisitorCounter from '@/components/FloatingVisitorCounter';
+import { ToastProvider } from '@/components/Toast/ToastContext';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -33,7 +34,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased text-gray-800 overflow-x-hidden`}
       >
-        {children}
+        <ToastProvider>{children}</ToastProvider>
         <FloatingVisitorCounter />
       </body>
     </html>

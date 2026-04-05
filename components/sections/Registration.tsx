@@ -2,6 +2,8 @@
 
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
+import { scrollTo } from '../utils';
+import { useToast } from '../Toast/ToastContext';
 
 interface RegistrationProps {
   selectedCourseId: number;
@@ -16,6 +18,7 @@ const Registration = ({
   selectedCourseId,
   selectedPriceId,
 }: RegistrationProps) => {
+  const { showToast } = useToast();
   const router = useRouter();
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -49,9 +52,20 @@ const Registration = ({
     setAddress('');
   };
 
+  const handleValidation = () => {
+    if (!selectedCourseId || !selectedPriceId) {
+      scrollTo('courses');
+      showToast('Please select a course and package', 'error');
+      return false;
+    }
+    return true;
+  };
+
   const isDisabled = !name || !email || !phone || !age || !background || !address || loading;
 
   const handleSubmit = async () => {
+    const valid = await handleValidation();
+    if (!valid) return;
     setLoading(true);
 
     try {

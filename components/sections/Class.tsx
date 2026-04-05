@@ -143,7 +143,7 @@ const ClassesSection = ({
                 ref={(el) => {
                   priceCardRefs.current[index] = el;
                 }}
-                className={`min-w-[50%] md:min-w-[320px] snap-center ${index === 0 ? 'ml-6' : ''} ${index === courses.length - 1 ? 'mr-6' : ''}`}
+                className={`min-w-[50%] md:min-w-[320px] snap-center ${index === 0 ? 'ml-6' : ''} ${index === selectedCourse?.prices.length - 1 ? 'mr-6' : ''}`}
               >
                 <PriceCard
                   price={price}

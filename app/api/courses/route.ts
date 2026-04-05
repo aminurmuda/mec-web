@@ -29,7 +29,6 @@ export const GET = async (req: Request) => {
         )
       `,
       )
-      .lte('id', 9)
       .eq('soft_delete', false)
       .eq('prices.soft_delete', false)
       .order('id', { ascending: true });

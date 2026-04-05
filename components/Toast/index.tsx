@@ -30,7 +30,7 @@ const Toast = ({ message, type, onClose }: ToastProps) => {
   }
 
   if (type === 'error') {
-    bgColor = 'bg-red-600';
+    bgColor = 'bg-red-400';
   }
 
   if (type === 'info') {
@@ -45,7 +45,7 @@ const Toast = ({ message, type, onClose }: ToastProps) => {
         px-5 py-3
         rounded-full
         shadow-lg
-        text-sm
+        text-md
         font-medium
         flex items-center gap-3
         pointer-events-auto

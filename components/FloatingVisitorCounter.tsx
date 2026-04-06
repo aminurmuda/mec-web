@@ -3,7 +3,6 @@
 import { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { v4 as uuidv4 } from 'uuid';
-import { Eye } from './icons/Eye';
 
 const FloatingVisitorCounter = () => {
   const [count, setCount] = useState<number>(0);

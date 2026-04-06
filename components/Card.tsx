@@ -1,9 +1,5 @@
+import { CardConfig } from '@/type/course';
 import { ReactNode } from 'react';
-
-export type CardConfig = {
-  isClosed?: boolean;
-  label?: string;
-};
 
 type CardProps = {
   isSelected?: boolean;

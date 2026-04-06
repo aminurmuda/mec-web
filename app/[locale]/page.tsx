@@ -10,28 +10,13 @@ import Class from '@/components/sections/Class';
 import { useEffect, useState } from 'react';
 import Footer from '@/components/sections/Footer';
 import { formatPrice } from '@/components/utils';
-import { CardConfig } from '@/components/Card';
-
-export type Price = {
-  id: number;
-  period: number;
-  price: number;
-};
-
-export type Course = {
-  id: number;
-  title: string;
-  subtitle: string;
-  description: string;
-  session: number;
-  meetings: number;
-  course_duration: number;
-  prices: Price[];
-  order: number;
-  config?: CardConfig;
-};
+import { Course } from '@/type/course';
+import { useParams } from 'next/navigation';
 
 const Page = () => {
+  const params = useParams();
+  const locale = (params.locale as string) || 'en';
+
   const [selectedCourseId, setSelectedCourseId] = useState<number>(0);
   const [selectedPriceId, setSelectedPriceId] = useState<number>(0);
 
@@ -62,7 +47,7 @@ const Page = () => {
   useEffect(() => {
     const fetchCourses = async () => {
       try {
-        const res = await fetch('/api/courses', {
+        const res = await fetch(`/api/courses?lang=${locale}`, {
           headers: {
             'x-api-key': process.env.NEXT_PUBLIC_API_KEY || '',
           },
@@ -81,7 +66,7 @@ const Page = () => {
     };
 
     fetchCourses();
-  }, []);
+  }, [locale]);
 
   return (
     <main className="flex flex-col">

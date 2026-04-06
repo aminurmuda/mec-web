@@ -1,7 +1,6 @@
-import { Price } from '@/app/page';
+import { Price } from '@/type/course';
 import { formatPrice } from './utils';
 import Card from './Card';
-import { useEffect } from 'react';
 
 interface PriceCardProps {
   price: Price;

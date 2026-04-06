@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from 'next/font/google';
 import './globals.css';
 import FloatingVisitorCounter from '@/components/FloatingVisitorCounter';
 import { ToastProvider } from '@/components/Toast/ToastContext';
+import LanguageSwitcher from '@/components/LanguageSwitcher';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -34,6 +35,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased text-gray-800 overflow-x-hidden`}
       >
+        <LanguageSwitcher />
         <ToastProvider>{children}</ToastProvider>
         <FloatingVisitorCounter />
       </body>

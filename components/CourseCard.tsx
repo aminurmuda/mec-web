@@ -1,9 +1,9 @@
-import { Course } from '@/app/page';
+import { Course } from '@/type/course';
 import ButtonCTA from './Button';
 import { formatPrice } from './utils';
 import Card from './Card';
 
-type CardProps = {
+type CourseCardProps = {
   course: Course;
   isSelected?: boolean;
   onSelect?: (id: number) => void;
@@ -11,7 +11,7 @@ type CardProps = {
   setSelectedPriceId: (id: number) => void;
 };
 
-const CourseCard = (props: CardProps) => {
+const CourseCard = (props: CourseCardProps) => {
   const { course, isSelected = false, onSelect, selectedPriceId, setSelectedPriceId } = props;
   const { title, subtitle, description, prices, course_duration, session, meetings } = course;
 

@@ -1,9 +1,9 @@
 'use client';
 
 import { useRef } from 'react';
-import { Course } from '@/app/page';
 import CourseCard from '../CourseCard';
 import PriceCard from '../PriceCard';
+import { Course } from '@/type/course';
 
 interface ClassesSectionProps {
   selectedCourseId: number;

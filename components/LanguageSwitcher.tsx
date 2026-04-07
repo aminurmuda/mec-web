@@ -1,16 +1,24 @@
 'use client';
 
 import { useRouter, usePathname } from 'next/navigation';
-import { Language } from './icons/Language';
 
 const LanguageSwitcher = () => {
   const router = useRouter();
   const pathname = usePathname();
 
   const currentLocale = pathname?.split('/')[1] || 'en';
+  const isEnglish = currentLocale === 'en';
 
   const toggleLanguage = () => {
-    const nextLocale = currentLocale === 'en' ? 'id' : 'en';
+    let nextLocale = 'en';
+
+    if (currentLocale === 'en') {
+      nextLocale = 'id';
+    }
+
+    if (currentLocale === 'id') {
+      nextLocale = 'en';
+    }
 
     if (!pathname || pathname === '/') {
       router.push(`/${nextLocale}`);
@@ -24,21 +32,20 @@ const LanguageSwitcher = () => {
   };
 
   return (
-    <div
-      className="shadow-lg rounded-lg bg-white"
-      style={{
-        position: 'fixed',
-        top: '100px',
-        left: '24px',
-        zIndex: 50,
-        boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)',
-      }}
-    >
+    <div className="flex items-center gap-2 px-3 py-2">
       <button
         onClick={toggleLanguage}
-        className="flex items-center gap-2 px-4 py-2 rounded-lg hover:bg-brand-bg font-semibold text-md"
+        className={`relative w-14 h-7 flex items-center rounded-full transition-colors ${
+          isEnglish ? 'bg-gray-300' : 'bg-blue-500'
+        }`}
       >
-        <Language /> {currentLocale === 'en' ? 'ID' : 'EN'}
+        <span
+          className={`flex items-center justify-center text-xs font-semibold absolute w-6 h-6 bg-white rounded-full shadow-md transform transition-transform ${
+            isEnglish ? 'translate-x-1' : 'translate-x-7'
+          }`}
+        >
+          {isEnglish ? 'EN' : 'ID'}
+        </span>
       </button>
     </div>
   );

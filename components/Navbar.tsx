@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { League_Spartan } from 'next/font/google';
+import LanguageSwitcher from './LanguageSwitcher';
 
 const leagueSpartan = League_Spartan({
   subsets: ['latin'],
@@ -43,21 +44,23 @@ const Navbar = () => {
     <nav className="sticky top-0 bg-brand-bg z-50 border-b border-gray-200">
       <div className="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
         <h1
-          className={`${leagueSpartan.variable} font-sans font-extrabold text-lg text-brand-primary leading-none lg:w-5`}
+          className={`${leagueSpartan.variable} font-sans font-extrabold text-lg text-brand-primary leading-none w-5`}
         >
           Medeena English Center
         </h1>
-
-        <div className="hidden md:flex gap-8 text-sm font-medium">
-          {menu.map((item) => (
-            <button
-              key={item.id}
-              onClick={() => scrollTo(item.id)}
-              className="hover:text-white transition text-brand-primary font-semibold text-lg"
-            >
-              {item.name}
-            </button>
-          ))}
+        <div className="flex gap-2">
+          <div className="hidden md:flex gap-8 text-sm font-medium">
+            {menu.map((item) => (
+              <button
+                key={item.id}
+                onClick={() => scrollTo(item.id)}
+                className="hover:text-white transition text-brand-primary font-semibold text-lg"
+              >
+                {item.name}
+              </button>
+            ))}
+          </div>
+          <LanguageSwitcher />
         </div>
 
         {/* Burger Button */}

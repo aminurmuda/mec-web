@@ -60,7 +60,7 @@ const Navbar = () => {
               </button>
             ))}
           </div>
-          <LanguageSwitcher />
+          {process.env.NEXT_PUBLIC_SHOW_LANGUAGE_SWITCHER === 'true' && <LanguageSwitcher />}
         </div>
 
         {/* Burger Button */}

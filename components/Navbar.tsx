@@ -60,20 +60,25 @@ const Navbar = () => {
               </button>
             ))}
           </div>
-          {process.env.NEXT_PUBLIC_SHOW_LANGUAGE_SWITCHER === 'true' && <LanguageSwitcher />}
+          <div className="hidden md:block">
+            {process.env.NEXT_PUBLIC_SHOW_LANGUAGE_SWITCHER === 'true' && <LanguageSwitcher />}
+          </div>
         </div>
 
         {/* Burger Button */}
-        <button
-          onClick={() => setOpen(!open)}
-          className="md:hidden flex items-center justify-center w-10 h-10 rounded-lg border border-gray-300"
-        >
-          <div className="space-y-1">
-            <span className="block w-5 h-0.5 bg-brand-primary"></span>
-            <span className="block w-5 h-0.5 bg-brand-primary"></span>
-            <span className="block w-5 h-0.5 bg-brand-primary"></span>
-          </div>
-        </button>
+        <div className="md:hidden flex gap-2">
+          {process.env.NEXT_PUBLIC_SHOW_LANGUAGE_SWITCHER === 'true' && <LanguageSwitcher />}
+          <button
+            onClick={() => setOpen(!open)}
+            className="flex items-center justify-center w-10 h-10 rounded-lg border border-gray-300"
+          >
+            <div className="space-y-1">
+              <span className="block w-5 h-0.5 bg-brand-primary"></span>
+              <span className="block w-5 h-0.5 bg-brand-primary"></span>
+              <span className="block w-5 h-0.5 bg-brand-primary"></span>
+            </div>
+          </button>
+        </div>
       </div>
 
       {/* Mobile Menu */}

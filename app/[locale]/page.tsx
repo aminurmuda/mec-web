@@ -7,15 +7,14 @@ import Insights from '@/components/sections/Insights';
 import About from '@/components/sections/About';
 import Testimonials from '@/components/sections/Testimonials';
 import Class from '@/components/sections/Class';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import Footer from '@/components/sections/Footer';
 import { formatPrice } from '@/components/utils';
 import { Course } from '@/type/course';
-import { useParams } from 'next/navigation';
+import LocaleContext from '@/context/LocaleContext';
 
 const Page = () => {
-  const params = useParams();
-  const locale = (params.locale as string) || 'en';
+  const { locale } = useContext(LocaleContext);
 
   const [selectedCourseId, setSelectedCourseId] = useState<number>(0);
   const [selectedPriceId, setSelectedPriceId] = useState<number>(0);
@@ -69,7 +68,7 @@ const Page = () => {
   }, [locale]);
 
   return (
-    <main className="flex flex-col">
+    <main className="flex flex-col kocak">
       <Navbar />
 
       <Hero />

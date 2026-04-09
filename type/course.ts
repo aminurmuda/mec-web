@@ -1,5 +1,3 @@
-export type Locale = 'en' | 'id';
-
 export type Price = {
   id: number;
   period: number;

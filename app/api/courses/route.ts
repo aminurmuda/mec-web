@@ -1,5 +1,6 @@
+import { Locale } from '@/lib/i18n';
 import { supabaseServer } from '@/lib/supabase-server';
-import { CourseMulti, Locale } from '@/type/course';
+import { CourseMulti } from '@/type/course';
 import { NextResponse } from 'next/server';
 
 export const GET = async (req: Request) => {

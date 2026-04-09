@@ -1,6 +1,6 @@
+import './globals.css';
 import type { Metadata, Viewport } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
-import './globals.css';
 import FloatingVisitorCounter from '@/components/FloatingVisitorCounter';
 import { ToastProvider } from '@/components/Toast/ToastContext';
 
@@ -24,15 +24,15 @@ export const viewport: Viewport = {
   initialScale: 1,
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{
+type RootLayoutProps = Readonly<{
   children: React.ReactNode;
-}>) {
+}>;
+
+export default function RootLayout({ children }: RootLayoutProps) {
   return (
-    <html lang="en">
+    <html>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased text-gray-800 overflow-x-hidden`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased text-gray-800 overflow-x-hidden lah`}
       >
         <ToastProvider>{children}</ToastProvider>
         <FloatingVisitorCounter />

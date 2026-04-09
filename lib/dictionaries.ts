@@ -31,6 +31,18 @@ export const dictionaries: Record<Locale, Record<string, string>> = {
     address: 'Address',
     age: 'Age',
     background: 'Your professional background',
+
+    // Insights
+    insightTitle: 'English Insights',
+    insightSubtitle: 'Tips, strategies, and resources to help you improve your English faster.',
+
+    // About us
+    aboutUs: 'About Us',
+    aboutUsSubtitle:
+      'Our mission is to help learners gain confidence in speaking English through practical, real-world learning methods. We create engaging lessons tailored to different levels, so learners can practice speaking, listening, reading, and writing effectively. Join us and experience a supportive environment where every student can improve at their own pace while enjoying the journey of learning English.',
+    meetOurLeadTeacher: 'Meet Our Lead Teacher',
+    meetOurLeadTeacherSubtitle:
+      'Our lead teacher has been teaching English since 2014, holds MSc TESOL, and has extensive experience guiding professionals from diverse backgrounds. She also mentor students for IELTS preparation, providing personalized strategies and real-world practice to help learners achieve their best scores.',
   },
   id: {
     heroTitle: 'Belajar Bahasa Inggris Dengan Lebih Percaya Diri',
@@ -62,5 +74,18 @@ export const dictionaries: Record<Locale, Record<string, string>> = {
     address: 'Alamat',
     age: 'Usia',
     background: 'Latar Belakang Profesional Kamu',
+
+    // Insights
+    insightTitle: 'English Insights',
+    insightSubtitle:
+      'Tips, strategi, dan sumber belajar yang bantu kamu meningkatkan kemampuan Bahasa Inggrismu lebih cepat.',
+
+    // About us
+    aboutUs: 'Tentang Kami',
+    aboutUsSubtitle:
+      'Misi kami adalah membantu para pelajar lebih percaya diri dalam berbicara Bahasa Inggris melalui metode belajar yang praktis dan relevan dengan kehidupan nyata. Kami menghadirkan materi yang menarik dan disesuaikan dengan berbagai level, supaya kamu bisa latihan speaking, listening, reading, dan writing dengan lebih efektif. Yuk gabung dan rasakan lingkungan belajar yang suportif, di mana setiap orang bisa berkembang sesuai ritmenya sambil tetap menikmati proses belajar.',
+    meetOurLeadTeacher: 'Tentang Pengajar Kami',
+    meetOurLeadTeacherSubtitle:
+      'Pengajar utama kami sudah mengajar Bahasa Inggris sejak 2014, memiliki gelar MSc TESOL, dan berpengalaman membimbing para profesional dari berbagai latar belakang. Beliau juga membimbing persiapan IELTS dengan pendekatan yang personal dan latihan yang relevan, supaya kamu bisa mencapai skor terbaikmu.',
   },
 };

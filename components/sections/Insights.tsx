@@ -1,14 +1,15 @@
 'use client';
 
+import { useLocale } from '@/context/LocaleContext';
+
 const Insights = () => {
+  const { getCopy } = useLocale();
   return (
     <section id="insights" className="py-20 bg-brand-bg">
       <div className="max-w-5xl mx-auto px-6 text-center">
         {/* Section Heading */}
-        <h2 className="text-4xl font-bold mb-4 text-gray-800">English Insights</h2>
-        <p className="text-lg mb-12 text-gray-600">
-          Tips, strategies, and resources to help you improve your English faster.
-        </p>
+        <h2 className="text-4xl font-bold mb-4 text-gray-800">{getCopy('insightTitle')}</h2>
+        <p className="text-lg mb-12 text-gray-600">{getCopy('insightSubtitle')}</p>
 
         {/* Placeholder Grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">

@@ -49,7 +49,7 @@ const CourseCard = (props: CourseCardProps) => {
               className="line-through text-gray-400 text-sm font-bold"
               style={{ marginBottom: '3px' }}
             >
-              {originalPrice}/month
+              {originalPrice}/{getCopy('month')}
             </p>
           )}
           <p className={`text-xl font-bold text-gray-900 ${!isSelected && 'mt-12'}`}>

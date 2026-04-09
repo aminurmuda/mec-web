@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { League_Spartan } from 'next/font/google';
 import LanguageSwitcher from './LanguageSwitcher';
+import { useLocale } from '@/context/LocaleContext';
 
 const leagueSpartan = League_Spartan({
   subsets: ['latin'],
@@ -10,15 +11,26 @@ const leagueSpartan = League_Spartan({
 });
 
 const Navbar = () => {
+  const { locale } = useLocale();
   const [open, setOpen] = useState(false);
 
-  const menu = [
+  const menuEn = [
     { name: 'Courses', id: 'courses' },
     { name: 'Registration', id: 'registration' },
     { name: 'Insights', id: 'insights' },
     { name: 'About', id: 'about' },
     { name: 'Testimonials', id: 'testimonials' },
   ];
+
+  const menuId = [
+    { name: 'Kelas', id: 'courses' },
+    { name: 'Pendaftaran', id: 'registration' },
+    { name: 'Insights', id: 'insights' },
+    { name: 'Tentang Kami', id: 'about' },
+    { name: 'Testimoni', id: 'testimonials' },
+  ];
+
+  const menu = locale === 'en' ? menuEn : menuId;
 
   const scrollTo = (id: string) => {
     const el = document.getElementById(id);

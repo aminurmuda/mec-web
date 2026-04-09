@@ -4,6 +4,7 @@ import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { scrollTo } from '../utils';
 import { useToast } from '../Toast/ToastContext';
+import { useLocale } from '@/context/LocaleContext';
 
 interface RegistrationProps {
   selectedCourseId: number;
@@ -18,6 +19,7 @@ const Registration = ({
   selectedCourseId,
   selectedPriceId,
 }: RegistrationProps) => {
+  const { getCopy } = useLocale();
   const { showToast } = useToast();
   const router = useRouter();
   const [name, setName] = useState('');
@@ -106,55 +108,59 @@ const Registration = ({
     }
   };
 
+  const registrationSubtitle = getCopy('registrationSubtitle');
+  const parts = registrationSubtitle.split('{cta}');
+
   return (
     <section id="registration" className="py-20 bg-white">
       <div className="max-w-4xl mx-auto px-6 text-center">
-        <h2 className="text-3xl font-bold mb-4 text-gray-800">Registration</h2>
+        <h2 className="text-3xl font-bold mb-4 text-gray-800">{getCopy('registration')}</h2>
 
         <p className="text-gray-600 mb-10">
-          Fill in your details below and click <strong>Enroll Now</strong>. We will receive your
-          registration information directly via WhatsApp and contact you to confirm your enrollment.
+          {parts[0]}
+          <strong>{getCopy('enrollNow')}</strong>
+          {parts[1]}
         </p>
 
         <div className="p-8 bg-brand-bg rounded-lg shadow-md max-w-md mx-auto">
           <input
             type="text"
-            placeholder="Full Name"
+            placeholder={getCopy('fullName')}
             value={name}
             onChange={(e) => setName(e.target.value)}
             className="w-full mb-4 px-4 py-2 border border-gray-200 bg-white rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
           />
           <input
             type="email"
-            placeholder="Email"
+            placeholder={getCopy('email')}
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             className="w-full mb-4 px-4 py-2 border border-gray-200 bg-white rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
           />
           <input
             type="tel"
-            placeholder="Phone Number"
+            placeholder={getCopy('phoneNumber')}
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
             className="w-full mb-6 px-4 py-2 border border-gray-200 bg-white rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
           />
           <input
             type="text"
-            placeholder="Address"
+            placeholder={getCopy('address')}
             value={address}
             onChange={(e) => setAddress(e.target.value)}
             className="w-full mb-6 px-4 py-2 border border-gray-200 bg-white rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
           />
           <input
             type="number"
-            placeholder="Age"
+            placeholder={getCopy('age')}
             value={age}
             onChange={(e) => setAge(e.target.value)}
             className="w-full mb-6 px-4 py-2 border border-gray-200 bg-white rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
           />
           <input
             type="text"
-            placeholder="Your professional background"
+            placeholder={getCopy('background')}
             value={background}
             onChange={(e) => setBackground(e.target.value)}
             className="w-full mb-6 px-4 py-2 border border-gray-200 bg-white rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
@@ -167,8 +173,8 @@ const Registration = ({
             {loading && (
               <span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
             )}
-            {loading && <span>Submitting...</span>}
-            {!loading && <span>Enroll Now</span>}
+            {loading && <span>{getCopy('submitting')}</span>}
+            {!loading && <span>{getCopy('enrollNow')}</span>}
           </button>
         </div>
       </div>

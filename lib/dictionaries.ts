@@ -1,3 +1,4 @@
+import test from 'node:test';
 import { Locale } from './i18n';
 
 export const dictionaries: Record<Locale, Record<string, string>> = {
@@ -43,6 +44,11 @@ export const dictionaries: Record<Locale, Record<string, string>> = {
     meetOurLeadTeacher: 'Meet Our Lead Teacher',
     meetOurLeadTeacherSubtitle:
       'Our lead teacher has been teaching English since 2014, holds MSc TESOL, and has extensive experience guiding professionals from diverse backgrounds. She also mentor students for IELTS preparation, providing personalized strategies and real-world practice to help learners achieve their best scores.',
+
+    // Testimonials
+    testimonials: 'What Our Students Say',
+    testimonialsSubtitle:
+      'Our programs welcome learners from various backgrounds – university and master’s students, working professionals, teachers, and IELTS candidates. Each class is designed to provide practical and engaging learning experiences, help students builds confidence and apply English in both everyday and professional settings. Here’s the students’ testimonials of the English programs.',
   },
   id: {
     heroTitle: 'Belajar Bahasa Inggris Dengan Lebih Percaya Diri',
@@ -86,6 +92,11 @@ export const dictionaries: Record<Locale, Record<string, string>> = {
       'Misi kami adalah membantu para pelajar lebih percaya diri dalam berbicara Bahasa Inggris melalui metode belajar yang praktis dan relevan dengan kehidupan nyata. Kami menghadirkan materi yang menarik dan disesuaikan dengan berbagai level, supaya kamu bisa latihan speaking, listening, reading, dan writing dengan lebih efektif. Yuk gabung dan rasakan lingkungan belajar yang suportif, di mana setiap orang bisa berkembang sesuai ritmenya sambil tetap menikmati proses belajar.',
     meetOurLeadTeacher: 'Tentang Pengajar Kami',
     meetOurLeadTeacherSubtitle:
-      'Pengajar utama kami sudah mengajar Bahasa Inggris sejak 2014, memiliki gelar MSc TESOL, dan berpengalaman membimbing para profesional dari berbagai latar belakang. Beliau juga membimbing persiapan IELTS dengan pendekatan yang personal dan latihan yang relevan, supaya kamu bisa mencapai skor terbaikmu.',
+      'Pengajar kami sudah mengajar Bahasa Inggris sejak 2014, memiliki gelar MSc TESOL, dan berpengalaman membimbing para profesional dari berbagai latar belakang. Beliau juga membimbing persiapan IELTS dengan pendekatan yang personal dan latihan yang relevan, supaya kamu bisa mencapai skor terbaikmu.',
+
+    // Testimonials
+    testimonials: 'Kesan Pelajar Kami',
+    testimonialsSubtitle:
+      'Program kami terbuka untuk berbagai latar belakang — mulai dari mahasiswa S1 dan S2, profesional, guru, hingga peserta IELTS. Setiap kelas dirancang agar pembelajaran terasa praktis dan menarik, membantu kamu lebih percaya diri serta bisa menggunakan Bahasa Inggris baik dalam kehidupan sehari-hari maupun di dunia kerja. Berikut beberapa testimoni dari para peserta program Bahasa Inggris kami.',
   },
 };

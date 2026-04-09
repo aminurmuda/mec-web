@@ -71,7 +71,7 @@ export const dictionaries: Record<Locale, Record<string, string>> = {
     // Registration
     registration: 'Pendaftaran',
     registrationSubtitle:
-      'Isi informasi bawah ini dan klik {cta}. Kami akan menerima informasi pendaftaranmu langsung melalui WhatsApp dan menghubungimu untuk memverfirmasi pendaftaranmu.',
+      'Isi informasi bawah ini dan klik {cta}. Kami akan menerima informasi pendaftaranmu langsung melalui WhatsApp dan menghubungimu untuk mengonfirmasi pendaftaranmu.',
     submitting: 'Mengirim...',
     enrollNow: 'Daftar Sekarang',
     fullName: 'Nama Lengkap',

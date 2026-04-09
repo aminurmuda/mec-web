@@ -2,11 +2,10 @@
 
 import Image from 'next/image';
 import { scrollTo } from '../utils';
-import { dictionaries } from '@/lib/dictionaries';
 import { useLocale } from '@/context/LocaleContext';
 
 const Hero = () => {
-  const { locale } = useLocale();
+  const { getCopy } = useLocale();
   return (
     <section id="hero" className="relative h-screen w-full">
       <Image
@@ -22,18 +21,18 @@ const Hero = () => {
 
       <div className="relative flex flex-col items-center justify-center h-full max-w-5xl mx-auto px-6 text-center text-white">
         <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-4 sm:mb-6">
-          {dictionaries[locale].heroTitle}
+          {getCopy('heroTitle')}
         </h1>
 
         <p className="text-base sm:text-lg md:text-xl mb-6 sm:mb-8 leading-relaxed">
-          {dictionaries[locale].heroSubtitle}
+          {getCopy('heroSubtitle')}
         </p>
 
         <button
           onClick={() => scrollTo('courses')}
           className="px-8 py-3 bg-brand-primary rounded-lg hover:opacity-90 font-bold"
         >
-          {dictionaries[locale].heroButton}
+          {getCopy('heroButton')}
         </button>
       </div>
     </section>

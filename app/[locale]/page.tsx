@@ -6,12 +6,12 @@ import Registration from '@/components/sections/Registration';
 import Insights from '@/components/sections/Insights';
 import About from '@/components/sections/About';
 import Testimonials from '@/components/sections/Testimonials';
-import Class from '@/components/sections/Class';
 import { useContext, useEffect, useState } from 'react';
 import Footer from '@/components/sections/Footer';
 import { formatPrice } from '@/components/utils';
 import { Course } from '@/type/course';
 import LocaleContext from '@/context/LocaleContext';
+import CoursesSection from '@/components/sections/Course';
 
 const Page = () => {
   const { locale } = useContext(LocaleContext);
@@ -40,7 +40,7 @@ const Page = () => {
     if (!price) {
       return '';
     }
-    return `for ${price?.period === 1 ? ' a month' : price?.period + ' months'} (${formatPrice(price?.price)})`;
+    return `for ${price?.period === 1 ? ' a month' : price?.period + ' months'} (${formatPrice(price?.price, locale)})`;
   };
 
   useEffect(() => {
@@ -73,7 +73,7 @@ const Page = () => {
 
       <Hero />
 
-      <Class
+      <CoursesSection
         selectedCourseId={selectedCourseId}
         setSelectedCourseId={setSelectedCourseId}
         selectedPriceId={selectedPriceId}

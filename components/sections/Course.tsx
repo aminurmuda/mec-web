@@ -4,8 +4,9 @@ import { useRef } from 'react';
 import CourseCard from '../CourseCard';
 import PriceCard from '../PriceCard';
 import { Course } from '@/type/course';
+import { useLocale } from '@/context/LocaleContext';
 
-interface ClassesSectionProps {
+interface CoursesSectionProps {
   selectedCourseId: number;
   setSelectedCourseId: (id: number) => void;
   selectedPriceId: number;
@@ -13,13 +14,14 @@ interface ClassesSectionProps {
   courses: Course[];
 }
 
-const ClassesSection = ({
+const CoursesSection = ({
   selectedCourseId,
   setSelectedCourseId,
   selectedPriceId,
   setSelectedPriceId,
   courses,
-}: ClassesSectionProps) => {
+}: CoursesSectionProps) => {
+  const { getCopy } = useLocale();
   const scrollRef = useRef<HTMLDivElement | null>(null);
   const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
   const priceCardRefs = useRef<(HTMLDivElement | null)[]>([]);
@@ -63,7 +65,7 @@ const ClassesSection = ({
     <section id="courses" className="bg-brand-bg py-20">
       <div className="mx-auto max-w-6xl px-6">
         <div className="mb-10 flex items-center justify-between">
-          <h2 className="text-3xl font-bold">Our English Programs</h2>
+          <h2 className="text-3xl font-bold">{getCopy('ourProgram')}</h2>
 
           <div className="flex gap-2">
             <button
@@ -159,4 +161,4 @@ const ClassesSection = ({
   );
 };
 
-export default ClassesSection;
+export default CoursesSection;

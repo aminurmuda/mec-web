@@ -1,3 +1,5 @@
+import { Locale } from '@/lib/i18n';
+
 export const scrollTo = (id: string) => {
   const el = document.getElementById(id);
 
@@ -14,8 +16,8 @@ export const scrollTo = (id: string) => {
   });
 };
 
-export const formatPrice = (value: number) => {
-  if (value === 0) return 'Free';
+export const formatPrice = (value: number, locale: Locale) => {
+  if (value === 0) return locale === 'en' ? 'Free' : 'Gratis';
   const roundedValue = Math.round(value);
   return 'Rp ' + new Intl.NumberFormat('id-ID').format(roundedValue);
 };

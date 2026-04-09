@@ -5,10 +5,12 @@ import { Locale } from '@/lib/i18n';
 
 type LocaleContextType = {
   locale: Locale;
+  getCopy: (key: string) => string;
 };
 
 const LocaleContext = createContext<LocaleContextType>({
   locale: 'en',
+  getCopy: () => '',
 });
 
 export const useLocale = () => useContext(LocaleContext);

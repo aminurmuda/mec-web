@@ -1,3 +1,4 @@
+import { useLocale } from '@/context/LocaleContext';
 import { CardConfig } from '@/type/course';
 import { ReactNode } from 'react';
 
@@ -9,6 +10,7 @@ type CardProps = {
 };
 
 const Card = ({ isSelected, onSelect, children, config }: CardProps) => {
+  const { getCopy } = useLocale();
   const { isClosed, label } = config || {};
   const handleClick = () => {
     if (onSelect && !isClosed) {
@@ -21,7 +23,7 @@ const Card = ({ isSelected, onSelect, children, config }: CardProps) => {
       {isClosed && (
         <div className="absolute top-5 left-3 z-10">
           <span className="bg-red-400 text-white text-xs font-semibold px-6 py-2 rounded-full shadow">
-            Temporarily Closed
+            {getCopy('temporarilyClosed')}
           </span>
         </div>
       )}

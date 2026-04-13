@@ -69,8 +69,6 @@ const Page = () => {
 
   return (
     <main className="flex flex-col kocak">
-      <Navbar />
-
       <Hero />
 
       <CoursesSection

@@ -1,14 +1,27 @@
 'use client';
+
 import LocaleProvider from '@/context/LocaleProvider';
 import { Locale } from '@/lib/i18n';
 import { useParams } from 'next/navigation';
+import Navbar from '@/components/Navbar';
 
-type LocaleLayoutProps = Readonly<{
+type LocaleLayoutProps = {
   children: React.ReactNode;
-}>;
+};
 
-export default function LocaleLayout({ children }: LocaleLayoutProps) {
+const LocaleLayout = ({ children }: LocaleLayoutProps) => {
   const params = useParams();
   const locale = (params.locale as Locale) || 'en';
-  return <LocaleProvider locale={locale}>{children}</LocaleProvider>;
-}
+
+  return (
+    <LocaleProvider locale={locale}>
+      <div className="min-h-screen bg-gray-50">
+        <Navbar />
+
+        <main>{children}</main>
+      </div>
+    </LocaleProvider>
+  );
+};
+
+export default LocaleLayout;

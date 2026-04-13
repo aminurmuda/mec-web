@@ -4,6 +4,8 @@ import { useState } from 'react';
 import { League_Spartan } from 'next/font/google';
 import LanguageSwitcher from './LanguageSwitcher';
 import { useLocale } from '@/context/LocaleContext';
+import NavbarProfile from './NavbarProfile';
+import Link from 'next/link';
 
 const leagueSpartan = League_Spartan({
   subsets: ['latin'],
@@ -55,11 +57,12 @@ const Navbar = () => {
   return (
     <nav className="sticky top-0 bg-brand-bg z-50 border-b border-gray-200">
       <div className="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
-        <h1
+        <Link
+          href={`/${locale}`}
           className={`${leagueSpartan.variable} font-sans font-extrabold text-lg text-brand-primary leading-none w-5`}
         >
           Medeena English Center
-        </h1>
+        </Link>
         <div className="flex gap-2">
           <div className="hidden md:flex gap-8 text-sm font-medium">
             {menu.map((item) => (
@@ -72,8 +75,9 @@ const Navbar = () => {
               </button>
             ))}
           </div>
-          <div className="hidden md:block">
+          <div className="hidden md:flex">
             {process.env.NEXT_PUBLIC_SHOW_LANGUAGE_SWITCHER === 'true' && <LanguageSwitcher />}
+            <NavbarProfile />
           </div>
         </div>
 

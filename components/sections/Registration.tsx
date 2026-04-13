@@ -1,6 +1,5 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { scrollTo } from '../utils';
 import { useToast } from '../Toast/ToastContext';
@@ -19,9 +18,8 @@ const Registration = ({
   selectedCourseId,
   selectedPriceId,
 }: RegistrationProps) => {
-  const { getCopy } = useLocale();
+  const { getCopy, redirect } = useLocale();
   const { showToast } = useToast();
-  const router = useRouter();
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
@@ -95,7 +93,7 @@ const Registration = ({
       if (res.ok) {
         resetForm();
         sentToWhatsApp();
-        router.push('/thank-you');
+        redirect('/thank-you');
       } else {
         alert(result.error || 'Something went wrong');
         return;

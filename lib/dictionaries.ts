@@ -1,4 +1,3 @@
-import test from 'node:test';
 import { Locale } from './i18n';
 
 export const dictionaries: Record<Locale, Record<string, string>> = {
@@ -49,6 +48,13 @@ export const dictionaries: Record<Locale, Record<string, string>> = {
     testimonials: 'What Our Students Say',
     testimonialsSubtitle:
       'Our programs welcome learners from various backgrounds – university and master’s students, working professionals, teachers, and IELTS candidates. Each class is designed to provide practical and engaging learning experiences, help students builds confidence and apply English in both everyday and professional settings. Here’s the students’ testimonials of the English programs.',
+
+    // Thank you
+    thankYouTitle: 'Enrollment received',
+    thankYouDescription:
+      'Thanks for enrolling. We’ve received your registration and will contact you shortly via WhatsApp.',
+    thankYouEmailNotice: 'A confirmation email has been sent to your inbox.',
+    thankYouBackHome: 'Back to homepage',
   },
   id: {
     heroTitle: 'Belajar Bahasa Inggris Dengan Lebih Percaya Diri',
@@ -98,5 +104,12 @@ export const dictionaries: Record<Locale, Record<string, string>> = {
     testimonials: 'Kesan Pelajar Kami',
     testimonialsSubtitle:
       'Program kami terbuka untuk berbagai latar belakang — mulai dari mahasiswa S1 dan S2, profesional, guru, hingga peserta IELTS. Setiap kelas dirancang agar pembelajaran terasa praktis dan menarik, membantu kamu lebih percaya diri serta bisa menggunakan Bahasa Inggris baik dalam kehidupan sehari-hari maupun di dunia kerja. Berikut beberapa testimoni dari para peserta program Bahasa Inggris kami.',
+
+    // Thank you
+    thankYouTitle: 'Pendaftaran berhasil diterima',
+    thankYouDescription:
+      'Terima kasih sudah mendaftar. Kami telah menerima data kamu dan akan segera menghubungi melalui WhatsApp.',
+    thankYouEmailNotice: 'Email konfirmasi telah dikirim ke inbox kamu.',
+    thankYouBackHome: 'Kembali ke halaman utama',
   },
 };

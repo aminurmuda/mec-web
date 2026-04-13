@@ -1,13 +1,13 @@
 'use client';
 
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
+import { useLocale } from '@/context/LocaleContext';
 
 const ThankYouPage = () => {
-  const router = useRouter();
+  const { getCopy, redirect } = useLocale();
 
   const handleBackHome = () => {
-    router.push('/');
+    redirect('/');
   };
 
   return (
@@ -29,17 +29,12 @@ const ThankYouPage = () => {
             </svg>
           </div>
 
-          <h1 className="text-xl font-semibold text-gray-900 mb-2">Enrollment received</h1>
+          <h1 className="text-xl font-semibold text-gray-900 mb-2">{getCopy('thankYouTitle')}</h1>
 
-          <p className="text-sm text-gray-600 mb-6">
-            Thanks for enrolling. We’ve received your registration and will contact you shortly via
-            WhatsApp.
-          </p>
+          <p className="text-sm text-gray-600 mb-6">{getCopy('thankYouDescription')}</p>
 
           <div className="border border-blue-100 rounded-lg p-4 mb-6 bg-brand-bg">
-            <p className="text-sm text-gray-700">
-              A confirmation email has been sent to your inbox.
-            </p>
+            <p className="text-sm text-gray-700">{getCopy('thankYouEmailNotice')}</p>
           </div>
 
           <div className="border-t border-gray-200 my-6"></div>
@@ -48,7 +43,7 @@ const ThankYouPage = () => {
             onClick={handleBackHome}
             className="w-full bg-brand-primary text-white py-2.5 rounded-lg text-sm font-medium hover:opacity-90 transition"
           >
-            Back to homepage
+            {getCopy('thankYouBackHome')}
           </button>
         </div>
 

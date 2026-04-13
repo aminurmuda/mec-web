@@ -1,10 +1,11 @@
 'use client';
 
-import { useRouter, usePathname } from 'next/navigation';
+import { useLocale } from '@/context/LocaleContext';
+import { usePathname } from 'next/navigation';
 
 const LanguageSwitcher = () => {
-  const router = useRouter();
   const pathname = usePathname();
+  const { redirect } = useLocale();
 
   const currentLocale = pathname?.split('/')[1] || 'en';
   const isEnglish = currentLocale === 'en';
@@ -21,14 +22,14 @@ const LanguageSwitcher = () => {
     }
 
     if (!pathname || pathname === '/') {
-      router.push(`/${nextLocale}`);
+      redirect(`/${nextLocale}`);
       return;
     }
 
     const segments = pathname.split('/');
     segments[1] = nextLocale;
 
-    router.push(segments.join('/'));
+    redirect(segments.join('/'));
   };
 
   return (

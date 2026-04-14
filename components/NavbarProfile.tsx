@@ -39,7 +39,11 @@ const NavbarProfile = () => {
   }, []);
 
   if (status === 'loading') {
-    return <div className="w-24 h-9 bg-gray-200 rounded-full animate-pulse" />;
+    return (
+      <div className="p-2">
+        <div className="w-8 h-8 p-1 bg-gray-200 rounded-full animate-pulse" />
+      </div>
+    );
   }
 
   if (!session) {
@@ -51,7 +55,7 @@ const NavbarProfile = () => {
       {/* Trigger */}
       <button
         onClick={handleToggle}
-        className="flex items-center gap-3 px-2 py-1.5 rounded-full hover:bg-gray-100 transition"
+        className="flex items-center p-2 rounded-full hover:bg-gray-100 transition"
       >
         {session.user?.image ? (
           <Image

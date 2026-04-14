@@ -11,6 +11,11 @@ const protectedRoutes = ['/dashboard', '/profile'];
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
+  // ✅ skip all static files (public)
+  if (/\.(.*)$/.test(pathname)) {
+    return;
+  }
+
   // skip internal
   if (
     pathname.startsWith('/api') ||

@@ -4,6 +4,7 @@ import LocaleProvider from '@/context/LocaleProvider';
 import { Locale } from '@/lib/i18n';
 import { useParams } from 'next/navigation';
 import Navbar from '@/components/Navbar';
+import Footer from '@/components/sections/Footer';
 
 type LocaleLayoutProps = {
   children: React.ReactNode;
@@ -19,6 +20,8 @@ const LocaleLayout = ({ children }: LocaleLayoutProps) => {
         <Navbar />
 
         <main>{children}</main>
+
+        <Footer />
       </div>
     </LocaleProvider>
   );

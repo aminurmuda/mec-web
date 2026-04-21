@@ -31,7 +31,10 @@ const CourseCard = (props: CourseCardProps) => {
 
   const isFirstPriceSelected = prices.length > 1 && selectedPriceId === prices[0].id;
   const showOriginalPrice =
-    isSelected && !isFirstPriceSelected && !originalPrice.includes(getCopy('free'));
+    isSelected &&
+    !isFirstPriceSelected &&
+    !originalPrice.includes(getCopy('free')) &&
+    prices.length > 1;
 
   return (
     <Card isSelected={isSelected} onSelect={handleClick} config={course.config}>

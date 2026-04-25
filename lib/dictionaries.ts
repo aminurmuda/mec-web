@@ -55,6 +55,11 @@ export const dictionaries: Record<Locale, Record<string, string>> = {
       'Thanks for enrolling. We’ve received your registration and will contact you shortly via WhatsApp.',
     thankYouEmailNotice: 'A confirmation email has been sent to your inbox.',
     thankYouBackHome: 'Back to homepage',
+    saveMore: 'SAVE MORE',
+    asYouPay: 'as you pay every',
+    or: 'or',
+    '3': 'three',
+    '6': 'six',
   },
   id: {
     heroTitle: 'Belajar Bahasa Inggris Dengan Lebih Percaya Diri',
@@ -111,5 +116,10 @@ export const dictionaries: Record<Locale, Record<string, string>> = {
       'Terima kasih sudah mendaftar. Kami telah menerima data kamu dan akan segera menghubungi melalui WhatsApp.',
     thankYouEmailNotice: 'Email konfirmasi telah dikirim ke inbox kamu.',
     thankYouBackHome: 'Kembali ke halaman utama',
+    saveMore: 'LEBIH HEMAT',
+    asYouPay: 'untuk pembayaran setiap',
+    '3': 'tiga',
+    '6': 'enam',
+    or: 'atau',
   },
 };

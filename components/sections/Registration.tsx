@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { scrollTo } from '../utils';
 import { useToast } from '../Toast/ToastContext';
 import { useLocale } from '@/context/LocaleContext';
+import Input from '../Input';
 
 interface RegistrationProps {
   selectedCourseId: number;
@@ -121,47 +122,44 @@ const Registration = ({
         </p>
 
         <div className="p-8 bg-brand-bg rounded-lg shadow-md max-w-md mx-auto">
-          <input
-            type="text"
+          <Input
             placeholder={getCopy('fullName')}
             value={name}
             onChange={(e) => setName(e.target.value)}
-            className="w-full mb-4 px-4 py-2 border border-gray-200 bg-white rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
+            className="mb-4"
           />
-          <input
+          <Input
             type="email"
             placeholder={getCopy('email')}
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="w-full mb-4 px-4 py-2 border border-gray-200 bg-white rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
+            className="mb-4"
           />
-          <input
+          <Input
             type="tel"
             placeholder={getCopy('phoneNumber')}
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
-            className="w-full mb-6 px-4 py-2 border border-gray-200 bg-white rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
+            className="mb-6"
           />
-          <input
-            type="text"
+          <Input
             placeholder={getCopy('address')}
             value={address}
             onChange={(e) => setAddress(e.target.value)}
-            className="w-full mb-6 px-4 py-2 border border-gray-200 bg-white rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
+            className="mb-6"
           />
-          <input
+          <Input
             type="number"
             placeholder={getCopy('age')}
             value={age}
             onChange={(e) => setAge(e.target.value)}
-            className="w-full mb-6 px-4 py-2 border border-gray-200 bg-white rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
+            className="mb-6"
           />
-          <input
-            type="text"
+          <Input
             placeholder={getCopy('background')}
             value={background}
             onChange={(e) => setBackground(e.target.value)}
-            className="w-full mb-6 px-4 py-2 border border-gray-200 bg-white rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
+            className="mb-6"
           />
           <button
             disabled={isDisabled}

@@ -7,11 +7,11 @@ import Insights from '@/components/sections/Insights';
 import About from '@/components/sections/About';
 import Testimonials from '@/components/sections/Testimonials';
 import { useContext, useEffect, useState } from 'react';
-import Footer from '@/components/sections/Footer';
 import { formatPrice } from '@/components/utils';
 import { Course } from '@/type/course';
 import LocaleContext from '@/context/LocaleContext';
 import CoursesSection from '@/components/sections/Course';
+import { CourseSelectionContext } from '@/context/CourseSelectionContext';
 
 const Page = () => {
   const { locale } = useContext(LocaleContext);
@@ -68,30 +68,31 @@ const Page = () => {
   }, [locale]);
 
   return (
-    <main className="flex flex-col kocak">
-      <Hero />
+    <CourseSelectionContext.Provider
+      value={{
+        selectedCourseId,
+        setSelectedCourseId,
+        selectedPriceId,
+        setSelectedPriceId,
+        courses,
+        selectedCourseStr: getSelectedCourse(),
+        selectedPriceStr: getSelectedPrice(),
+      }}
+    >
+      <main className="flex flex-col kocak">
+        <Hero />
 
-      <CoursesSection
-        selectedCourseId={selectedCourseId}
-        setSelectedCourseId={setSelectedCourseId}
-        selectedPriceId={selectedPriceId}
-        setSelectedPriceId={setSelectedPriceId}
-        courses={courses}
-      />
+        <CoursesSection />
 
-      <Registration
-        selectedCourse={getSelectedCourse()}
-        selectedPrice={getSelectedPrice()}
-        selectedCourseId={selectedCourseId}
-        selectedPriceId={selectedPriceId}
-      />
+        <Registration />
 
-      <Insights />
+        <Insights />
 
-      <About />
+        <About />
 
-      <Testimonials />
-    </main>
+        <Testimonials />
+      </main>
+    </CourseSelectionContext.Provider>
   );
 };
 

@@ -5,22 +5,12 @@ import { scrollTo } from '../utils';
 import { useToast } from '../Toast/ToastContext';
 import { useLocale } from '@/context/LocaleContext';
 import Input from '../Input';
+import { useCourseSelection } from '@/context/CourseSelectionContext';
 
-interface RegistrationProps {
-  selectedCourseId: number;
-  selectedPriceId: number;
-  selectedCourse: string;
-  selectedPrice: string;
-}
-
-const Registration = ({
-  selectedCourse,
-  selectedPrice,
-  selectedCourseId,
-  selectedPriceId,
-}: RegistrationProps) => {
+const Registration = () => {
   const { getCopy, redirect } = useLocale();
   const { showToast } = useToast();
+  const { selectedCourseId, selectedPriceId, selectedCourseStr, selectedPriceStr } = useCourseSelection();
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
@@ -36,7 +26,7 @@ const Registration = ({
     Phone: ${phone}
     Age: ${age}
     Background: ${background}
-    Course: ${selectedCourse} ${selectedPrice}`;
+    Course: ${selectedCourseStr} ${selectedPriceStr}`;
     const encodedMessage = encodeURIComponent(message);
     window.open(
       `https://wa.me/62${process.env.NEXT_PUBLIC_PHONE_NUMBER}?text=${encodedMessage}`,
@@ -79,8 +69,8 @@ const Registration = ({
         address,
         course_id: selectedCourseId,
         price_id: selectedPriceId,
-        selectedCourse,
-        selectedPrice,
+        selectedCourse: selectedCourseStr,
+        selectedPrice: selectedPriceStr,
       };
 
       const res = await fetch('/api/register', {

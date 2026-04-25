@@ -5,23 +5,11 @@ import CourseCard from '../CourseCard';
 import PriceCard from '../PriceCard';
 import { Course } from '@/type/course';
 import { useLocale } from '@/context/LocaleContext';
+import { useCourseSelection } from '@/context/CourseSelectionContext';
 
-interface CoursesSectionProps {
-  selectedCourseId: number;
-  setSelectedCourseId: (id: number) => void;
-  selectedPriceId: number;
-  setSelectedPriceId: (id: number) => void;
-  courses: Course[];
-}
-
-const CoursesSection = ({
-  selectedCourseId,
-  setSelectedCourseId,
-  selectedPriceId,
-  setSelectedPriceId,
-  courses,
-}: CoursesSectionProps) => {
+const CoursesSection = () => {
   const { getCopy } = useLocale();
+  const { selectedCourseId, courses } = useCourseSelection();
   const scrollRef = useRef<HTMLDivElement | null>(null);
   const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
   const priceCardRefs = useRef<(HTMLDivElement | null)[]>([]);
@@ -38,9 +26,7 @@ const CoursesSection = ({
     scrollRef.current.scrollBy({ left: 320, behavior: 'smooth' });
   };
 
-  const handleSelectCourse = (id: number, index: number) => {
-    setSelectedCourseId(id);
-
+  const handleScrollToCourse = (index: number) => {
     // Scroll selected card into view
     const cardEl = cardRefs.current[index];
     if (cardEl && scrollRef.current) {
@@ -48,9 +34,7 @@ const CoursesSection = ({
     }
   };
 
-  const handleSelectPrice = (id: number, index: number) => {
-    setSelectedPriceId(id);
-
+  const handleScrollToPrice = (index: number) => {
     // Scroll selected card into view
     const cardEl = priceCardRefs.current[index];
     if (cardEl && scrollRef.current) {
@@ -124,10 +108,7 @@ const CoursesSection = ({
               >
                 <CourseCard
                   course={course}
-                  isSelected={selectedCourseId === course.id}
-                  onSelect={() => handleSelectCourse(course.id, index)}
-                  selectedPriceId={selectedPriceId}
-                  setSelectedPriceId={setSelectedPriceId}
+                  onScrollIntoView={() => handleScrollToCourse(index)}
                 />
               </div>
             ))}
@@ -149,9 +130,8 @@ const CoursesSection = ({
               >
                 <PriceCard
                   price={price}
-                  selectedPriceId={selectedPriceId}
-                  setSelectedPriceId={() => handleSelectPrice(price.id, index)}
                   index={index}
+                  onScrollIntoView={() => handleScrollToPrice(index)}
                 />
               </div>
             );

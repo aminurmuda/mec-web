@@ -3,26 +3,27 @@ import ButtonCTA from './Button';
 import { formatPrice } from './utils';
 import Card from './Card';
 import { useLocale } from '@/context/LocaleContext';
+import { useCourseSelection } from '@/context/CourseSelectionContext';
 
 type CourseCardProps = {
   course: Course;
-  isSelected?: boolean;
-  onSelect?: (id: number) => void;
-  selectedPriceId: number;
-  setSelectedPriceId: (id: number) => void;
+  onScrollIntoView?: () => void;
 };
 
-const CourseCard = (props: CourseCardProps) => {
+const CourseCard = ({ course, onScrollIntoView }: CourseCardProps) => {
   const { locale, getCopy } = useLocale();
-  const { course, isSelected = false, onSelect, selectedPriceId, setSelectedPriceId } = props;
+  const { selectedCourseId, setSelectedCourseId, selectedPriceId, setSelectedPriceId } = useCourseSelection();
   const { title, subtitle, description, prices, course_duration, session, meetings } = course;
+
+  const isSelected = selectedCourseId === course.id;
 
   const selectedPrice = prices.find((price) => price.id === selectedPriceId) ?? prices[0];
 
   const handleClick = () => {
-    if (onSelect) {
-      setSelectedPriceId(prices[0].id);
-      onSelect(course.id);
+    setSelectedPriceId(prices[0].id);
+    setSelectedCourseId(course.id);
+    if (onScrollIntoView) {
+      onScrollIntoView();
     }
   };
 

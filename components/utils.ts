@@ -3,7 +3,7 @@ import { Locale } from '@/lib/i18n';
 export const scrollTo = (id: string) => {
   const el = document.getElementById(id);
 
-  if (!el) return;
+  if (!el) return false;
 
   const nav = document.querySelector('nav');
   const navHeight = nav?.offsetHeight || 0;
@@ -14,6 +14,8 @@ export const scrollTo = (id: string) => {
     top,
     behavior: 'smooth',
   });
+
+  return true;
 };
 
 export const formatPrice = (value: number, locale: Locale) => {

@@ -24,6 +24,9 @@
 }
 
 @layer base {
+  html {
+    scroll-behavior: smooth;
+  }
   body {
     @apply bg-background text-gray-800 font-sans;
   }

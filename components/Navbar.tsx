@@ -8,7 +8,7 @@ import NavbarProfile from './NavbarProfile';
 import NavbarMobileMenu from './NavbarMobileMenu';
 import Link from 'next/link';
 import { signOut, useSession } from 'next-auth/react';
-import Image from 'next/image';
+import { scrollTo } from './utils';
 
 const leagueSpartan = League_Spartan({
   subsets: ['latin'],
@@ -44,23 +44,11 @@ const Navbar = () => {
 
   const menu = locale === 'en' ? menuEn : menuId;
 
-  const scrollTo = (id: string) => {
-    const el = document.getElementById(id);
-
-    if (!el) return;
-
-    // Get navbar height dynamically
-    const nav = document.querySelector('nav');
-    const navHeight = nav?.offsetHeight || 0;
-
-    // Scroll so section top is just below navbar
-    const top = el.getBoundingClientRect().top + window.scrollY - navHeight;
-
-    window.scrollTo({
-      top,
-      behavior: 'smooth',
-    });
-
+  const handleClick = (id: string) => {
+    const success = scrollTo(id);
+    if (!success) {
+      redirect(`/#${id}`);
+    }
     setOpen(false);
   };
 
@@ -78,7 +66,7 @@ const Navbar = () => {
             {menu.map((item) => (
               <button
                 key={item.id}
-                onClick={() => scrollTo(item.id)}
+                onClick={() => handleClick(item.id)}
                 className="hover:text-white transition text-brand-primary font-semibold text-lg"
               >
                 {item.name}
@@ -118,7 +106,7 @@ const Navbar = () => {
       <NavbarMobileMenu
         open={open}
         menu={menu}
-        scrollTo={scrollTo}
+        scrollTo={handleClick}
         session={session}
         handleLogout={handleLogout}
       />

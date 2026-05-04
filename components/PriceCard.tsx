@@ -12,8 +12,12 @@ interface PriceCardProps {
 
 const PriceCard = ({ price, index, onScrollIntoView }: PriceCardProps) => {
   const { locale, getCopy } = useLocale();
-  const { selectedPriceId, setSelectedPriceId } = useCourseSelection();
+  const { selectedPriceId, setSelectedPriceId, selectedCourseId, courses } = useCourseSelection();
   const isFirstIndex = index === 0;
+
+  const selectedCourse = courses.find((c) => c.id === selectedCourseId);
+  const originalPriceNumber = selectedCourse?.prices?.[0]?.price || 0;
+  const originalPriceStr = formatPrice(originalPriceNumber * price.period, locale);
 
   const handleClick = () => {
     setSelectedPriceId(price.id);
@@ -35,14 +39,23 @@ const PriceCard = ({ price, index, onScrollIntoView }: PriceCardProps) => {
           {price.period} {price.period > 1 ? getCopy('months') : getCopy('month')}
         </p>
 
-        <p className="font-extrabold mt-2">
-          {formatPrice(price.price, locale)}
-          {!isFirstIndex && (
-            <span>
-              /{price.period} {getCopy('months')}
-            </span>
+        <div className="mt-2">
+          {!isFirstIndex && originalPriceNumber > 0 && !originalPriceStr.includes(getCopy('free')) && (
+            <p
+              className="line-through text-gray-400 text-sm font-bold mb-1"
+            >
+              {originalPriceStr}/{price.period} {getCopy('months')}
+            </p>
           )}
-        </p>
+          <p className="font-extrabold">
+            {formatPrice(price.price, locale)}
+            {!isFirstIndex && (
+              <span>
+                /{price.period} {getCopy('months')}
+              </span>
+            )}
+          </p>
+        </div>
         {!isFirstIndex && (
           <p className="text-sm">
             {getCopy('asYouPay')} {getCopy(price.period.toString())} {getCopy('months')}

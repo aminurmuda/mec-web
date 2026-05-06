@@ -26,7 +26,8 @@ const Registration = () => {
     Phone: ${phone}
     Age: ${age}
     Background: ${background}
-    Course: ${selectedCourseStr} ${selectedPriceStr}`;
+    Course: ${selectedCourseStr} 
+    Package: ${selectedPriceStr}`;
     const encodedMessage = encodeURIComponent(message);
     window.open(
       `https://wa.me/62${process.env.NEXT_PUBLIC_PHONE_NUMBER}?text=${encodedMessage}`,

@@ -48,6 +48,24 @@ export const POST = async (req: NextRequest) => {
       return NextResponse.json({ success: false, error: error.message }, { status: 500 });
     }
 
+    if (process.env.GOOGLE_SCRIPT_URL) {
+      try {
+        await fetch(process.env.GOOGLE_SCRIPT_URL, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            ...body,
+            id: data?.[0]?.id,
+            timestamp: new Date().toISOString(),
+          }),
+        });
+      } catch (sheetError) {
+        console.error('GOOGLE SHEETS ERROR:', sheetError);
+      }
+    }
+
     await resend.emails.send({
       from: `Medeena English Center <${process.env.RESEND_SENDER_EMAIL}>`,
       to: body.email,

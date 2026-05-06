@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { supabaseServer } from '@/lib/supabase-server';
 import { resend } from '@/lib/resend';
+import { Course, Price } from '@/type/course';
 
 type RegisterPayload = {
   name: string;
@@ -11,8 +12,10 @@ type RegisterPayload = {
   address: string;
   course_id: number;
   price_id: number;
-  selectedCourse: string;
-  selectedPrice: string;
+  selectedCourseStr: string;
+  selectedPriceStr: string;
+  selectedCourse: Course | undefined;
+  selectedPrice: Price | undefined;
 };
 
 export const POST = async (req: NextRequest) => {
@@ -58,7 +61,9 @@ export const POST = async (req: NextRequest) => {
           body: JSON.stringify({
             ...body,
             id: data?.[0]?.id,
-            timestamp: new Date().toISOString(),
+            timestamp: data?.[0]?.timestamp,
+            selectedPrice: body.selectedPrice?.price,
+            duration: body.selectedPrice?.period
           }),
         });
       } catch (sheetError) {

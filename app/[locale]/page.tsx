@@ -27,21 +27,33 @@ const Page = () => {
 
   const getSelectedCourse = () => {
     const course = findCourse(selectedCourseId);
-    if (!course) {
-      return '';
-    }
-    return `${course?.title} (${course?.subtitle})`;
+    return course
   };
 
   const getSelectedPrice = () => {
     const price = findCourse(selectedCourseId)?.prices.find(
       (price) => price.id === selectedPriceId,
     );
+    return price
+  };
+
+  const getCourseStr = () => {
+    const course = getSelectedCourse();
+    if (!course) {
+      return '';
+    }
+    return `${course?.title} (${course?.subtitle})`;
+  }
+
+  const getPriceStr = () => {
+    const price = getSelectedPrice();
     if (!price) {
       return '';
     }
-    return `for ${price?.period === 1 ? ' a month' : price?.period + ' months'} (${formatPrice(price?.price, locale)})`;
-  };
+    return `${formatPrice(price?.price, locale)} (for ${price?.period === 1 ? ' a month' : price?.period + ' months'})`;
+  }
+  
+
 
   useEffect(() => {
     const fetchCourses = async () => {
@@ -75,8 +87,10 @@ const Page = () => {
         selectedPriceId,
         setSelectedPriceId,
         courses,
-        selectedCourseStr: getSelectedCourse(),
-        selectedPriceStr: getSelectedPrice(),
+        selectedCourseStr: getCourseStr(),
+        selectedPriceStr: getPriceStr(),
+        selectedCourse: getSelectedCourse(),
+        selectedPrice: getSelectedPrice(),
       }}
     >
       <main className="flex flex-col kocak">

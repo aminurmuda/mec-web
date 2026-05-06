@@ -10,7 +10,7 @@ import { useCourseSelection } from '@/context/CourseSelectionContext';
 const Registration = () => {
   const { getCopy, redirect } = useLocale();
   const { showToast } = useToast();
-  const { selectedCourseId, selectedPriceId, selectedCourseStr, selectedPriceStr } = useCourseSelection();
+  const { selectedCourseId, selectedPriceId, selectedCourseStr, selectedPriceStr, selectedCourse, selectedPrice } = useCourseSelection();
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
@@ -69,8 +69,10 @@ const Registration = () => {
         address,
         course_id: selectedCourseId,
         price_id: selectedPriceId,
-        selectedCourse: selectedCourseStr,
-        selectedPrice: selectedPriceStr,
+        selectedCourseStr,
+        selectedPriceStr,
+        selectedCourse,
+        selectedPrice
       };
 
       const res = await fetch('/api/register', {

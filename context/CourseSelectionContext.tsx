@@ -1,7 +1,7 @@
 'use client';
 
 import { createContext, useContext } from 'react';
-import { Course } from '@/type/course';
+import { Course, Price } from '@/type/course';
 
 interface CourseSelectionContextType {
   selectedCourseId: number;
@@ -11,6 +11,8 @@ interface CourseSelectionContextType {
   courses: Course[];
   selectedCourseStr: string;
   selectedPriceStr: string;
+  selectedCourse: Course | undefined;
+  selectedPrice: Price | undefined;
 }
 
 export const CourseSelectionContext = createContext<CourseSelectionContextType | undefined>(

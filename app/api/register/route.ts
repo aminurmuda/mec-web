@@ -78,7 +78,7 @@ export const POST = async (req: NextRequest) => {
       html: `
     <div style="background:#f9fafb;padding:40px 20px;font-family:Inter,Arial,sans-serif;">
       
-      <div style="max-width:600px;margin:0 auto;background:#ffffff;border-radius:12px;padding:32px;border:1px solid #e5e7eb;">
+      <div style="max-width:600px;margin:0 auto;background:#ecf2ff;border-radius:12px;padding:32px;border:1px solid #e5e7eb;">
         
         <!-- LOGO -->
         <div style="margin-bottom:24px;">

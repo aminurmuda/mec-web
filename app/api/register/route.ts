@@ -107,12 +107,12 @@ export const POST = async (req: NextRequest) => {
         <div style="padding:16px;border:1px solid #e5e7eb;border-radius:8px;margin-bottom:24px;">
           <p style="margin:0 0 6px 0;font-size:14px;color:#6b7280;">Program</p>
           <p style="margin:0;font-size:16px;font-weight:600;color:#111827;">
-            ${body.selectedCourse}
+            ${body.selectedCourseStr}
           </p>
 
           <p style="margin:12px 0 6px 0;font-size:14px;color:#6b7280;">Package</p>
           <p style="margin:0;font-size:16px;font-weight:600;color:#111827;">
-            ${body.selectedPrice}
+            ${body.selectedPriceStr}
           </p>
         </div>
 

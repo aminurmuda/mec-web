@@ -8,7 +8,7 @@ import About from '@/components/sections/About';
 import Testimonials from '@/components/sections/Testimonials';
 import { useContext, useEffect, useState } from 'react';
 import { formatPrice } from '@/components/utils';
-import { Course } from '@/type/course';
+import { Course, Price } from '@/type/course';
 import LocaleContext from '@/context/LocaleContext';
 import CoursesSection from '@/components/sections/Course';
 import { CourseSelectionContext } from '@/context/CourseSelectionContext';
@@ -50,10 +50,12 @@ const Page = () => {
     if (!price) {
       return '';
     }
-    return `${formatPrice(price?.price, locale)} (for ${price?.period === 1 ? ' a month' : price?.period + ' months'})`;
+    return `${formatPrice(price?.price, locale)} ${getDuration(price)}`;
   }
-  
 
+  const getDuration = (price: Price) => {
+    return locale === 'en' ? `(for ${price?.period === 1 ? ' a month' : price?.period + ' months'})` : `(${price?.period + ' bulan'})`;
+  }
 
   useEffect(() => {
     const fetchCourses = async () => {

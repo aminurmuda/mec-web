@@ -1,8 +1,9 @@
 import Image from 'next/image';
+import Link from 'next/link';
 
 interface MobileMenuProps {
   open: boolean;
-  menu: { name: string; id: string }[];
+  menu: { name: string; id: string; link?: string; isNew?: boolean }[];
   scrollTo: (id: string) => void;
   session: any;
   handleLogout: () => void;
@@ -15,13 +16,29 @@ const NavbarMobileMenu = ({ open, menu, scrollTo, session, handleLogout }: Mobil
     <div className="md:hidden bg-brand-bg border-t border-gray-200">
       <div className="flex flex-col px-6 py-4 gap-4">
         {menu.map((item) => (
-          <button
-            key={item.id}
-            onClick={() => scrollTo(item.id)}
-            className="text-left text-brand-primary font-semibold text-lg hover:text-white transition"
-          >
-            {item.name}
-          </button>
+          item.link ? (
+            <Link
+              key={item.id}
+              href={item.link}
+              target="_blank"
+              className="flex items-center gap-2 text-left text-brand-primary font-semibold text-lg hover:text-white transition w-fit relative"
+            >
+              {item.name}
+              {item.isNew && (
+                <span className="bg-red-500 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full">
+                  New
+                </span>
+              )}
+            </Link>
+          ) : (
+            <button
+              key={item.id}
+              onClick={() => scrollTo(item.id)}
+              className="text-left text-brand-primary font-semibold text-lg hover:text-white transition"
+            >
+              {item.name}
+            </button>
+          )
         ))}
       </div>
       {!!session && (

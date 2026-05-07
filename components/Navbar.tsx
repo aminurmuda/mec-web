@@ -27,6 +27,7 @@ const Navbar = () => {
   const isAuthenticated = session?.user?.email !== undefined;
 
   const menuEn = [
+    { name: 'Game', id: 'game', link: 'https://colloquest-870319123218.asia-southeast1.run.app/', isNew: true },
     { name: 'Courses', id: 'courses' },
     { name: 'Registration', id: 'registration' },
     { name: 'Insights', id: 'insights' },
@@ -35,6 +36,7 @@ const Navbar = () => {
   ];
 
   const menuId = [
+    { name: 'Game', id: 'game', link: 'https://colloquest-870319123218.asia-southeast1.run.app/', isNew: true },
     { name: 'Kelas', id: 'courses' },
     { name: 'Pendaftaran', id: 'registration' },
     { name: 'Insights', id: 'insights' },
@@ -64,13 +66,29 @@ const Navbar = () => {
         <div className="flex gap-2">
           <div className="hidden md:flex gap-8 text-sm font-medium">
             {menu.map((item) => (
-              <button
-                key={item.id}
-                onClick={() => handleClick(item.id)}
-                className="hover:text-white transition text-brand-primary font-semibold text-lg"
-              >
-                {item.name}
-              </button>
+              item.link ? (
+                <Link
+                  key={item.id}
+                  href={item.link}
+                  target="_blank"
+                  className="flex items-center gap-1 hover:text-white transition text-brand-primary font-semibold text-lg relative"
+                >
+                  {item.name}
+                  {item.isNew && (
+                    <span className="absolute -top-3 -right-6 bg-red-500 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full">
+                      New
+                    </span>
+                  )}
+                </Link>
+              ) : (
+                <button
+                  key={item.id}
+                  onClick={() => handleClick(item.id)}
+                  className="hover:text-white transition text-brand-primary font-semibold text-lg"
+                >
+                  {item.name}
+                </button>
+              )
             ))}
             {isAuthenticated && (
               <button

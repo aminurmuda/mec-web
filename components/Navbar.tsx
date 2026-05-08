@@ -27,7 +27,7 @@ const Navbar = () => {
   const isAuthenticated = session?.user?.email !== undefined;
 
   const menuEn = [
-    { name: 'Game', id: 'game', link: 'https://colloquest-870319123218.asia-southeast1.run.app/', isNew: true },
+    { name: 'Game', id: 'game', link: 'https://playlish-870319123218.asia-southeast1.run.app/', isNew: true },
     { name: 'Courses', id: 'courses' },
     { name: 'Registration', id: 'registration' },
     { name: 'Insights', id: 'insights' },
@@ -36,7 +36,7 @@ const Navbar = () => {
   ];
 
   const menuId = [
-    { name: 'Game', id: 'game', link: 'https://colloquest-870319123218.asia-southeast1.run.app/', isNew: true },
+    { name: 'Game', id: 'game', link: 'https://playlish-870319123218.asia-southeast1.run.app/', isNew: true },
     { name: 'Kelas', id: 'courses' },
     { name: 'Pendaftaran', id: 'registration' },
     { name: 'Insights', id: 'insights' },

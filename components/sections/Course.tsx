@@ -117,7 +117,7 @@ const CoursesSection = () => {
       {showPriceCards && (
         <div
           id="price-cards"
-          className="max-w-6xl mx-auto flex gap-6 overflow-x-auto scroll-smooth snap-x snap-mandatory no-scrollbar py-4 cursor-grab"
+          className="max-w-6xl mx-auto grid md:flex gap-6 overflow-x-auto scroll-smooth md:snap-x md:snap-mandatory no-scrollbar py-4 cursor-grab px-6 md:px-0"
         >
           {selectedCourse?.prices.map((price, index) => {
             return (
@@ -126,7 +126,7 @@ const CoursesSection = () => {
                 ref={(el) => {
                   priceCardRefs.current[index] = el;
                 }}
-                className={`min-w-[60%] md:min-w-[320px] snap-center ${index === 0 ? 'ml-6' : ''} ${index === selectedCourse?.prices.length - 1 ? 'mr-6' : ''}`}
+                className={`min-w-[60%] md:min-w-[320px] snap-center ${index === 0 ? 'md:ml-6' : ''} ${index === selectedCourse?.prices.length - 1 ? 'md:mr-6' : ''}`}
               >
                 <PriceCard
                   price={price}

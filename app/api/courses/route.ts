@@ -47,7 +47,8 @@ export const GET = async (req: Request) => {
       )
       .eq('soft_delete', false)
       .eq('prices.soft_delete', false)
-      .order('id', { ascending: true });
+      .order('id', { ascending: true })
+      .order('id', { referencedTable: 'prices', ascending: true });
 
     if (error) {
       return NextResponse.json({ error: error.message }, { status: 500 });

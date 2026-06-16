@@ -1,32 +1,42 @@
-// /app/api/auth/[...nextauth]/route.ts
-
 import NextAuth, { NextAuthOptions } from 'next-auth';
 import GoogleProvider from 'next-auth/providers/google';
+import { supabaseServer } from '@/lib/supabase-server';
 
 export const authOptions: NextAuthOptions = {
+  secret: process.env.NEXTAUTH_SECRET,
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID!,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
+      authorization: {
+        params: {
+          prompt: 'select_account',
+          access_type: 'offline',
+          response_type: 'code',
+        },
+      },
     }),
   ],
 
+  pages: {
+    signIn: '/login',
+    error: '/login',
+  },
+
   callbacks: {
     async signIn({ user }) {
+      if (!user.email) {
+        return false;
+      }
+
       try {
-        const res = await fetch(`${process.env.NEXTAUTH_URL}/api/allowed-users`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            email: user.email,
-          }),
-        });
+        const { data, error } = await supabaseServer
+          .from('allowed_users')
+          .select('email')
+          .eq('email', user.email.toLowerCase())
+          .single();
 
-        const data = await res.json();
-
-        if (!data.allowed) {
+        if (error || !data) {
           return false;
         }
 

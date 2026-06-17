@@ -3,6 +3,7 @@
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react';
+import { Reorder } from 'framer-motion';
 import { useToast } from '@/components/Toast/ToastContext';
 import { CourseMulti, Price } from '@/type/course';
 
@@ -31,6 +32,13 @@ export default function AdminPage() {
     });
   };
 
+  const handleReorderCourses = (newActiveCourses: EditableCourse[]) => {
+    setCourses((prev) => {
+      const softDeleted = prev.filter((c) => c.soft_delete);
+      return [...newActiveCourses, ...softDeleted];
+    });
+  };
+
   // Redirect to login if unauthenticated
   useEffect(() => {
     if (status === 'unauthenticated') {
@@ -48,10 +56,11 @@ export default function AdminPage() {
       }
       const data = await res.json();
       if (data.courses) {
-        setCourses(data.courses);
+        const sorted = data.courses.sort((a: any, b: any) => a.order - b.order);
+        setCourses(sorted);
         setDirtyCourseIds(new Set());
         // Select first active course by default
-        const activeCourses = data.courses.filter((c: EditableCourse) => !c.soft_delete);
+        const activeCourses = sorted.filter((c: EditableCourse) => !c.soft_delete);
         if (activeCourses.length > 0) {
           const firstId = activeCourses[0].id;
           setSelectedCourseId(firstId);
@@ -141,7 +150,7 @@ export default function AdminPage() {
       session: 12,
       meetings: 3,
       course_duration: 60,
-      order: courses.length + 1,
+      order: courses.filter((c) => !c.soft_delete).length + 1,
       prices: [],
       config: {
         isClosed: false,
@@ -149,7 +158,11 @@ export default function AdminPage() {
       },
     };
 
-    setCourses((prev) => [...prev, newCourse]);
+    setCourses((prev) => {
+      const active = prev.filter((c) => !c.soft_delete);
+      const deleted = prev.filter((c) => c.soft_delete);
+      return [...active, newCourse, ...deleted];
+    });
     setDirtyCourseIds((prev) => {
       const next = new Set(prev);
       next.add(tempId);
@@ -242,7 +255,19 @@ export default function AdminPage() {
 
   // Batch save to backend
   const handleSaveChanges = async () => {
-    const dirtyCourses = courses.filter((c) => dirtyCourseIds.has(c.id));
+    const active = courses.filter((c) => !c.soft_delete);
+    const updatedCourses = courses.map((c) => {
+      if (c.soft_delete) return c;
+      const newIndex = active.findIndex((item) => item.id === c.id);
+      const newOrder = newIndex + 1;
+      return { ...c, order: newOrder };
+    });
+
+    const dirtyCourses = updatedCourses.filter((c) => {
+      const originalCourse = courses.find((item) => item.id === c.id);
+      const orderChanged = originalCourse && originalCourse.order !== c.order;
+      return orderChanged || dirtyCourseIds.has(c.id);
+    });
 
     if (dirtyCourses.length === 0) {
       showToast('No changes to save', 'info');
@@ -343,48 +368,59 @@ export default function AdminPage() {
             </button>
           </div>
 
-          <div className="flex-1 overflow-y-auto p-3 space-y-1">
+          <div className="flex-1 overflow-y-auto p-3">
             {activeCourses.length === 0 ? (
               <p className="text-sm text-gray-400 text-center py-8">No programs available.</p>
             ) : (
-              activeCourses
-                .sort((a, b) => a.order - b.order)
-                .map((course) => {
-                  const isSelected = course.id === selectedCourseId;
-                  const activePrices = course.prices ? course.prices.filter((p) => !p.soft_delete) : [];
-                  return (
-                    <button
-                      key={course.id}
-                      onClick={() => handleSelectCourse(course.id)}
-                      className={`w-full text-left p-3 rounded-xl transition duration-150 flex flex-col gap-1 border ${
-                        isSelected
-                          ? 'bg-blue-50 border-blue-200 text-blue-900 shadow-sm'
-                          : 'border-transparent text-gray-700 hover:bg-gray-50'
-                      }`}
-                    >
-                      <div className="flex justify-between items-start w-full">
-                        <span className="font-semibold text-sm truncate pr-2">
-                          {course.title_en || '(Untitled)'}
-                        </span>
-                        <span className="text-[10px] bg-gray-100 px-2 py-0.5 rounded text-gray-500 font-mono">
-                          Order {course.order}
-                        </span>
-                      </div>
-                      <div className="flex justify-between items-center w-full text-xs text-gray-500">
-                        {course.prices && (
-                          <span className="text-[9px] bg-blue-100 text-blue-700 font-bold px-1.5 py-0.25 rounded uppercase">
-                            {`${activePrices.length} Price Tier(s)`}
-                          </span>
-                        )}
-                        {course.config?.isClosed && (
-                          <span className="text-[9px] bg-red-100 text-red-700 font-bold px-1.5 py-0.25 rounded uppercase">
-                            Closed
-                          </span>
-                        )}
-                      </div>
-                    </button>
-                  );
-                })
+              <Reorder.Group
+                axis="y"
+                values={activeCourses}
+                onReorder={handleReorderCourses}
+                className="space-y-1.5"
+              >
+                {activeCourses.map((course, index) => {
+                    const isSelected = course.id === selectedCourseId;
+                    const activePrices = course.prices ? course.prices.filter((p) => !p.soft_delete) : [];
+                    return (
+                      <Reorder.Item
+                        key={course.id}
+                        value={course}
+                        className="cursor-grab active:cursor-grabbing"
+                      >
+                        <button
+                          onClick={() => handleSelectCourse(course.id)}
+                          className={`w-full text-left p-3 rounded-xl transition duration-150 flex flex-col gap-1 border ${
+                            isSelected
+                              ? 'bg-blue-50 border-blue-200 text-blue-900 shadow-sm'
+                              : 'border-transparent text-gray-700 bg-white hover:bg-gray-50'
+                          }`}
+                        >
+                          <div className="flex justify-between items-start w-full">
+                            <span className="font-semibold text-sm truncate pr-2 flex items-center gap-1.5">
+                              <span className="text-gray-400 font-mono text-xs select-none">⋮⋮</span>
+                              {course.title_en || '(Untitled)'}
+                            </span>
+                            <span className="text-[10px] bg-gray-100 px-2 py-0.5 rounded text-gray-500 font-mono">
+                              Order {index + 1}
+                            </span>
+                          </div>
+                          <div className="flex justify-between items-center w-full text-xs text-gray-500 pl-4.5">
+                            {course.prices && (
+                              <span className="text-[9px] bg-blue-100 text-blue-700 font-bold px-1.5 py-0.25 rounded uppercase">
+                                {`${activePrices.length} Price Tier(s)`}
+                              </span>
+                            )}
+                            {course.config?.isClosed && (
+                              <span className="text-[9px] bg-red-100 text-red-700 font-bold px-1.5 py-0.25 rounded uppercase">
+                                Closed
+                              </span>
+                            )}
+                          </div>
+                        </button>
+                      </Reorder.Item>
+                    );
+                  })}
+              </Reorder.Group>
             )}
           </div>
         </aside>
@@ -550,9 +586,9 @@ export default function AdminPage() {
                     </label>
                     <input
                       type="number"
-                      value={activeCourse.order}
-                      onChange={(e) => handleUpdateCourseField('order', parseInt(e.target.value) || 0)}
-                      className="w-full px-3 py-2 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white text-gray-800"
+                      value={activeCourses.findIndex((c) => c.id === activeCourse.id) + 1}
+                      disabled
+                      className="w-full px-3 py-2 border border-gray-200 rounded-xl text-sm bg-gray-100 text-gray-500 cursor-not-allowed"
                     />
                   </div>
                 </div>

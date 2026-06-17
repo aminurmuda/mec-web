@@ -4,45 +4,71 @@ import { authOptions } from '@/app/api/auth/[...nextauth]/route';
 import { supabaseServer } from '@/lib/supabase-server';
 import { CourseMulti, Price } from '@/type/course';
 
-export async function GET() {
+export async function GET(req: Request) {
   const session = await getServerSession(authOptions);
   if (!session) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
 
+  const { searchParams } = new URL(req.url);
+  const id = searchParams.get('id');
+
   try {
-    const { data, error } = await supabaseServer
-      .from('courses_multi')
-      .select(`
-        id,
-        order,
-        title_en,
-        title_id,
-        subtitle_en,
-        subtitle_id,
-        description_en,
-        description_id,
-        session,
-        meetings,
-        course_duration,
-        config,
-        prices (
+    if (id) {
+      // Fetch full details of the specific course
+      const { data, error } = await supabaseServer
+        .from('courses_multi')
+        .select(`
           id,
-          course_id,
-          period,
-          price
-        )
-      `)
-      .eq('soft_delete', false)
-      .eq('prices.soft_delete', false)
-      .order('order', { ascending: true })
-      .order('id', { referencedTable: 'prices', ascending: true });
+          order,
+          title_en,
+          title_id,
+          subtitle_en,
+          subtitle_id,
+          description_en,
+          description_id,
+          session,
+          meetings,
+          course_duration,
+          config,
+          prices (
+            id,
+            course_id,
+            period,
+            price
+          )
+        `)
+        .eq('id', id)
+        .eq('soft_delete', false)
+        .eq('prices.soft_delete', false)
+        .order('id', { referencedTable: 'prices', ascending: true })
+        .single();
 
-    if (error) {
-      return NextResponse.json({ error: error.message }, { status: 500 });
+      if (error) {
+        return NextResponse.json({ error: error.message }, { status: 500 });
+      }
+
+      return NextResponse.json({ course: data });
+    } else {
+      // Fetch only preview/sidebar fields for all courses
+      const { data, error } = await supabaseServer
+        .from('courses_multi')
+        .select(`
+          id,
+          order,
+          title_en,
+          title_id,
+          config
+        `)
+        .eq('soft_delete', false)
+        .order('order', { ascending: true });
+
+      if (error) {
+        return NextResponse.json({ error: error.message }, { status: 500 });
+      }
+
+      return NextResponse.json({ courses: data });
     }
-
-    return NextResponse.json({ courses: data });
   } catch (err) {
     return NextResponse.json({ error: 'Unexpected error' }, { status: 500 });
   }

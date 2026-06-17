@@ -19,6 +19,7 @@ export default function AdminPage() {
   const [courses, setCourses] = useState<EditableCourse[]>([]);
   const [selectedCourseId, setSelectedCourseId] = useState<number | null>(null);
   const [dirtyCourseIds, setDirtyCourseIds] = useState<Set<number>>(new Set());
+  const [loadingCourseId, setLoadingCourseId] = useState<number | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
 
@@ -52,7 +53,25 @@ export default function AdminPage() {
         // Select first active course by default
         const activeCourses = data.courses.filter((c: EditableCourse) => !c.soft_delete);
         if (activeCourses.length > 0) {
-          setSelectedCourseId(activeCourses[0].id);
+          const firstId = activeCourses[0].id;
+          setSelectedCourseId(firstId);
+          // Load details for first selected course
+          try {
+            setLoadingCourseId(firstId);
+            const detailRes = await fetch(`/api/admin/courses?id=${firstId}`);
+            if (detailRes.ok) {
+              const detailData = await detailRes.json();
+              if (detailData.course) {
+                setCourses((prev) =>
+                  prev.map((c) => (c.id === firstId ? { ...c, ...detailData.course } : c))
+                );
+              }
+            }
+          } catch (err) {
+            console.error(err);
+          } finally {
+            setLoadingCourseId(null);
+          }
         }
       }
     } catch (err) {
@@ -60,6 +79,33 @@ export default function AdminPage() {
       console.error(err);
     } finally {
       setIsLoading(false);
+    }
+  };
+
+  const handleSelectCourse = async (courseId: number) => {
+    setSelectedCourseId(courseId);
+
+    if (courseId < 0) return; // Draft courses are already fully in-memory
+
+    const course = courses.find((c) => c.id === courseId);
+    if (course && !course.prices) {
+      try {
+        setLoadingCourseId(courseId);
+        const res = await fetch(`/api/admin/courses?id=${courseId}`);
+        if (res.ok) {
+          const data = await res.json();
+          if (data.course) {
+            setCourses((prev) =>
+              prev.map((c) => (c.id === courseId ? { ...c, ...data.course } : c))
+            );
+          }
+        }
+      } catch (err) {
+        console.error('Failed to fetch course details:', err);
+        showToast('Failed to load program details', 'error');
+      } finally {
+        setLoadingCourseId(null);
+      }
     }
   };
 
@@ -305,11 +351,11 @@ export default function AdminPage() {
                 .sort((a, b) => a.order - b.order)
                 .map((course) => {
                   const isSelected = course.id === selectedCourseId;
-                  const activePrices = course.prices.filter((p) => !p.soft_delete);
+                  const activePrices = course.prices ? course.prices.filter((p) => !p.soft_delete) : [];
                   return (
                     <button
                       key={course.id}
-                      onClick={() => setSelectedCourseId(course.id)}
+                      onClick={() => handleSelectCourse(course.id)}
                       className={`w-full text-left p-3 rounded-xl transition duration-150 flex flex-col gap-1 border ${
                         isSelected
                           ? 'bg-blue-50 border-blue-200 text-blue-900 shadow-sm'
@@ -325,7 +371,11 @@ export default function AdminPage() {
                         </span>
                       </div>
                       <div className="flex justify-between items-center w-full text-xs text-gray-500">
-                        <span>{activePrices.length} Price Tier(s)</span>
+                        {course.prices && (
+                          <span className="text-[9px] bg-blue-100 text-blue-700 font-bold px-1.5 py-0.25 rounded uppercase">
+                            {`${activePrices.length} Price Tier(s)`}
+                          </span>
+                        )}
                         {course.config?.isClosed && (
                           <span className="text-[9px] bg-red-100 text-red-700 font-bold px-1.5 py-0.25 rounded uppercase">
                             Closed
@@ -341,7 +391,12 @@ export default function AdminPage() {
 
         {/* Right Details / Editor Panel */}
         <main className="flex-1 overflow-y-auto p-6 md:p-8 bg-gray-50">
-          {!activeCourse ? (
+          {loadingCourseId === selectedCourseId ? (
+            <div className="h-full flex flex-col justify-center items-center text-gray-400">
+              <div className="w-8 h-8 border-4 border-blue-500 border-t-transparent rounded-full animate-spin mb-3" />
+              <p className="text-sm">Loading details...</p>
+            </div>
+          ) : !activeCourse ? (
             <div className="h-full flex flex-col justify-center items-center text-gray-400">
               <span className="text-4xl mb-2">📋</span>
               <p className="text-sm">Select a program from the left sidebar to edit details.</p>
@@ -417,7 +472,7 @@ export default function AdminPage() {
                     </label>
                     <input
                       type="text"
-                      value={activeCourse.title_id}
+                      value={activeCourse.title_id || ''}
                       onChange={(e) => handleUpdateCourseField('title_id', e.target.value)}
                       className="w-full px-3 py-2 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white text-gray-800"
                     />

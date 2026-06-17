@@ -92,7 +92,7 @@ const Navbar = () => {
             ))}
             {isAuthenticated && (
               <button
-                onClick={() => redirect('/courses')}
+                onClick={() => redirect('/admin')}
                 className="hover:text-white transition text-brand-primary font-semibold text-lg"
               >
                 Edit Course
@@ -127,6 +127,7 @@ const Navbar = () => {
         scrollTo={handleClick}
         session={session}
         handleLogout={handleLogout}
+        onClose={() => setOpen(false)}
       />
     </nav>
   );

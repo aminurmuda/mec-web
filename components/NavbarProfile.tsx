@@ -102,6 +102,15 @@ const NavbarProfile = () => {
               >
                 Profile
               </button>
+              <button
+                onClick={() => {
+                  setIsOpen(false);
+                  redirect('/admin');
+                }}
+                className="w-full text-left px-5 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition"
+              >
+                Admin Dashboard
+              </button>
             </div>
 
             {/* Divider */}

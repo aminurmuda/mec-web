@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import { useLocale } from '@/context/LocaleContext';
 
 interface MobileMenuProps {
   open: boolean;
@@ -7,9 +8,12 @@ interface MobileMenuProps {
   scrollTo: (id: string) => void;
   session: any;
   handleLogout: () => void;
+  onClose: () => void;
 }
 
-const NavbarMobileMenu = ({ open, menu, scrollTo, session, handleLogout }: MobileMenuProps) => {
+const NavbarMobileMenu = ({ open, menu, scrollTo, session, handleLogout, onClose }: MobileMenuProps) => {
+  const { locale } = useLocale();
+
   if (!open) return null;
 
   return (
@@ -21,6 +25,7 @@ const NavbarMobileMenu = ({ open, menu, scrollTo, session, handleLogout }: Mobil
               key={item.id}
               href={item.link}
               target="_blank"
+              onClick={onClose}
               className="flex items-center gap-2 text-left text-brand-primary font-semibold text-lg hover:text-white transition w-fit relative"
             >
               {item.name}
@@ -42,33 +47,50 @@ const NavbarMobileMenu = ({ open, menu, scrollTo, session, handleLogout }: Mobil
         ))}
       </div>
       {!!session && (
-        <div className="border border-t border-gray-200 px-5 py-4">
-          <div className="flex items-center justify-between gap-4">
-            <div className="flex items-center gap-4">
-              {session.user?.image ? (
-                <Image
-                  src={session.user.image}
-                  alt={session.user.name || 'User'}
-                  width={36}
-                  height={36}
-                  className="rounded-full"
-                />
-              ) : (
-                <div className="w-8 h-8 flex items-center justify-center bg-gray-300 rounded-full text-sm font-medium">
-                  {session.user?.name?.charAt(0)}
-                </div>
-              )}
-              <div>
-                <p className="font-semibold text-brand-primary">{session?.user?.name}</p>
-                <p className="text-brand-primary mt-1 truncate">{session?.user?.email}</p>
+        <div className="border-t border-gray-200 px-6 py-4 flex flex-col gap-4">
+          <div className="flex items-center gap-4">
+            {session.user?.image ? (
+              <Image
+                src={session.user.image}
+                alt={session.user.name || 'User'}
+                width={36}
+                height={36}
+                className="rounded-full"
+              />
+            ) : (
+              <div className="w-9 h-9 flex items-center justify-center bg-gray-300 rounded-full text-sm font-semibold">
+                {session.user?.name?.charAt(0)}
               </div>
+            )}
+            <div>
+              <p className="font-semibold text-brand-primary">{session?.user?.name}</p>
+              <p className="text-brand-primary text-xs truncate max-w-[200px]">{session?.user?.email}</p>
             </div>
-            <span
-              onClick={handleLogout}
-              className="font-semibold text-left py-2.5 text-red-500 hover:bg-red-50 transition cursor-pointer"
+          </div>
+          <div className="flex flex-col gap-2.5 pt-2 border-t border-gray-100">
+            <Link
+              href={`/${locale}/profile`}
+              onClick={onClose}
+              className="text-left text-brand-primary text-md hover:text-white transition"
+            >
+              Profile
+            </Link>
+            <Link
+              href={`/${locale}/admin`}
+              onClick={onClose}
+              className="text-left text-brand-primary text-md hover:text-white transition"
+            >
+              Admin Dashboard
+            </Link>
+            <button
+              onClick={() => {
+                handleLogout();
+                onClose();
+              }}
+              className="text-left text-red-500 text-md hover:text-red-400 transition"
             >
               Log out
-            </span>
+            </button>
           </div>
         </div>
       )}

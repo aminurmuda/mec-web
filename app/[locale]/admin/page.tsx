@@ -396,7 +396,7 @@ export default function AdminPage() {
                           }`}
                         >
                           <div className="flex justify-between items-start w-full">
-                            <span className="font-semibold text-sm truncate pr-2 flex items-center gap-1.5">
+                            <span className="font-bold text-sm truncate pr-2 flex items-center gap-1.5">
                               <span className="text-gray-400 font-mono text-xs select-none">⋮⋮</span>
                               {course.title_en || '(Untitled)'}
                             </span>
@@ -404,6 +404,7 @@ export default function AdminPage() {
                               Order {index + 1}
                             </span>
                           </div>
+                          <span className="ml-4 font-semibold text-xs">{course.subtitle_en || '(Untitled)'}</span>
                           <div className="flex justify-between items-center w-full text-xs text-gray-500 pl-4.5">
                             {course.prices && (
                               <span className="text-[9px] bg-blue-100 text-blue-700 font-bold px-1.5 py-0.25 rounded uppercase">

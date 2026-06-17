@@ -57,7 +57,7 @@ export async function GET(req: Request) {
           id,
           order,
           title_en,
-          title_id,
+          subtitle_en,
           config
         `)
         .eq('soft_delete', false)

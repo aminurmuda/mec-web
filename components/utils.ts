@@ -20,6 +20,6 @@ export const scrollTo = (id: string) => {
 
 export const formatPrice = (value: number, locale: Locale) => {
   if (value === 0) return locale === 'en' ? 'Free' : 'Gratis';
-  const roundedValue = Math.round(value);
+  const roundedValue = Math.ceil(value);
   return 'Rp ' + new Intl.NumberFormat('id-ID').format(roundedValue);
 };

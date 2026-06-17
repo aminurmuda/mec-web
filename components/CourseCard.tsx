@@ -41,7 +41,7 @@ const CourseCard = ({ course, onScrollIntoView }: CourseCardProps) => {
     <Card isSelected={isSelected} onSelect={handleClick} config={course.config}>
       <div>
         <h3 className="text-xl font-bold text-brand-primary">{title}</h3>
-        <h3 className="text-gray-800 font-semibold">{subtitle}</h3>
+        <h3 className="text-sm text-gray-800 font-semibold">{subtitle}</h3>
 
         <div
           className={
@@ -56,7 +56,7 @@ const CourseCard = ({ course, onScrollIntoView }: CourseCardProps) => {
               {originalPrice}/{getCopy('month')}
             </p>
           )}
-          <p className={`text-xl font-bold text-gray-900 ${!isSelected && 'mt-12'}`}>
+          <p className={`text-xl font-bold text-gray-900 ${!isSelected ? 'mt-12' : ''}`}>
             {!finalPrice.includes(getCopy('free'))
               ? finalPrice + '/' + getCopy('month')
               : finalPrice}

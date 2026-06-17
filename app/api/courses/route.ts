@@ -41,7 +41,8 @@ export const GET = async (req: Request) => {
     prices (
       id,
       period,
-      price
+      price,
+      course_id
     )
   `,
       )

@@ -6,7 +6,7 @@ const locales = ['en', 'id'];
 const defaultLocale = 'en';
 
 const publicRoutes = ['/login', '/logout'];
-const protectedRoutes = ['/dashboard', '/profile'];
+const protectedRoutes = ['/dashboard', '/profile', '/admin'];
 
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;

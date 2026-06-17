@@ -1,7 +1,9 @@
 export type Price = {
   id: number;
+  course_id: number;
   period: number;
   price: number;
+  soft_delete?: boolean;
 };
 
 export type CardConfig = {

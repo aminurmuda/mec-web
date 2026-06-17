@@ -92,6 +92,22 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: 'Invalid payload' }, { status: 400 });
     }
 
+    // Get the highest price ID to handle explicit bigint IDs
+    const { data: maxPriceData, error: maxPriceError } = await supabaseServer
+      .from('prices')
+      .select('id')
+      .order('id', { ascending: false })
+      .limit(1);
+
+    if (maxPriceError) {
+      throw new Error(`Failed to query max price ID: ${maxPriceError.message}`);
+    }
+
+    let nextPriceId = 1;
+    if (maxPriceData && maxPriceData.length > 0) {
+      nextPriceId = Number(maxPriceData[0].id) + 1;
+    }
+
     for (const course of courses) {
       if (course.id < 0) {
         // Skip if new but already soft-deleted
@@ -131,6 +147,7 @@ export async function POST(req: Request) {
             const { error: priceError } = await supabaseServer
               .from('prices')
               .insert({
+                id: nextPriceId++,
                 course_id: newCourseId,
                 period: price.period,
                 price: price.price,
@@ -197,6 +214,7 @@ export async function POST(req: Request) {
                 const { error: priceError } = await supabaseServer
                   .from('prices')
                   .insert({
+                    id: nextPriceId++,
                     course_id: course.id,
                     period: price.period,
                     price: price.price,

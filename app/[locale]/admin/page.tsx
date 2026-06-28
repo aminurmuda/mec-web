@@ -3,13 +3,85 @@
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react';
-import { Reorder } from 'framer-motion';
+import { Reorder, useDragControls } from 'framer-motion';
 import { useToast } from '@/components/Toast/ToastContext';
 import { CourseMulti, Price } from '@/type/course';
 
 type EditableCourse = CourseMulti & {
   soft_delete?: boolean;
   prices: (Price & { soft_delete?: boolean })[];
+};
+
+interface ReorderableCourseItemProps {
+  course: EditableCourse;
+  index: number;
+  isSelected: boolean;
+  activePrices: any[];
+  isMobile: boolean;
+  handleSelectCourse: (id: number) => void;
+}
+
+const ReorderableCourseItem = ({
+  course,
+  index,
+  isSelected,
+  activePrices,
+  isMobile,
+  handleSelectCourse,
+}: ReorderableCourseItemProps) => {
+  const dragControls = useDragControls();
+
+  return (
+    <Reorder.Item
+      value={course}
+      dragListener={!isMobile}
+      dragControls={dragControls}
+      className={`cursor-grab active:cursor-grabbing ${isMobile ? 'cursor-default active:cursor-default' : ''}`}
+    >
+      <button
+        onClick={() => handleSelectCourse(course.id)}
+        className={`w-full text-left p-3 rounded-xl transition duration-150 flex flex-col gap-1 border ${
+          isSelected
+            ? 'bg-blue-50 border-blue-200 text-blue-900 shadow-sm'
+            : 'border-transparent text-gray-700 bg-white hover:bg-gray-50'
+        }`}
+      >
+        <div className="flex justify-between items-start w-full">
+          <span className="font-bold text-sm truncate pr-2 flex items-center gap-1.5">
+            <span
+              onPointerDown={(e) => {
+                if (isMobile) {
+                  dragControls.start(e);
+                }
+              }}
+              className={`text-gray-400 font-mono text-xs select-none touch-none ${
+                isMobile ? 'cursor-grab active:cursor-grabbing p-1 -m-1' : ''
+              }`}
+            >
+              ⋮⋮
+            </span>
+            {course.title_en || '(Untitled)'}
+          </span>
+          <span className="text-[10px] bg-gray-100 px-2 py-0.5 rounded text-gray-500 font-mono">
+            Order {index + 1}
+          </span>
+        </div>
+        <span className="ml-4 font-semibold text-xs">{course.subtitle_en || '(Untitled)'}</span>
+        <div className="flex justify-between items-center w-full text-xs text-gray-500 pl-4.5">
+          {course.prices && (
+            <span className="text-[9px] bg-blue-100 text-blue-700 font-bold px-1.5 py-0.25 rounded uppercase">
+              {`${activePrices.length} Price Tier(s)`}
+            </span>
+          )}
+          {course.config?.isClosed && (
+            <span className="text-[9px] bg-red-100 text-red-700 font-bold px-1.5 py-0.25 rounded uppercase">
+              Closed
+            </span>
+          )}
+        </div>
+      </button>
+    </Reorder.Item>
+  );
 };
 
 export default function AdminPage() {
@@ -23,6 +95,14 @@ export default function AdminPage() {
   const [loadingCourseId, setLoadingCourseId] = useState<number | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   const markCourseAsDirty = (courseId: number) => {
     setDirtyCourseIds((prev) => {
@@ -379,48 +459,20 @@ export default function AdminPage() {
                 className="space-y-1.5"
               >
                 {activeCourses.map((course, index) => {
-                    const isSelected = course.id === selectedCourseId;
-                    const activePrices = course.prices ? course.prices.filter((p) => !p.soft_delete) : [];
-                    return (
-                      <Reorder.Item
-                        key={course.id}
-                        value={course}
-                        className="cursor-grab active:cursor-grabbing"
-                      >
-                        <button
-                          onClick={() => handleSelectCourse(course.id)}
-                          className={`w-full text-left p-3 rounded-xl transition duration-150 flex flex-col gap-1 border ${
-                            isSelected
-                              ? 'bg-blue-50 border-blue-200 text-blue-900 shadow-sm'
-                              : 'border-transparent text-gray-700 bg-white hover:bg-gray-50'
-                          }`}
-                        >
-                          <div className="flex justify-between items-start w-full">
-                            <span className="font-bold text-sm truncate pr-2 flex items-center gap-1.5">
-                              <span className="text-gray-400 font-mono text-xs select-none">⋮⋮</span>
-                              {course.title_en || '(Untitled)'}
-                            </span>
-                            <span className="text-[10px] bg-gray-100 px-2 py-0.5 rounded text-gray-500 font-mono">
-                              Order {index + 1}
-                            </span>
-                          </div>
-                          <span className="ml-4 font-semibold text-xs">{course.subtitle_en || '(Untitled)'}</span>
-                          <div className="flex justify-between items-center w-full text-xs text-gray-500 pl-4.5">
-                            {course.prices && (
-                              <span className="text-[9px] bg-blue-100 text-blue-700 font-bold px-1.5 py-0.25 rounded uppercase">
-                                {`${activePrices.length} Price Tier(s)`}
-                              </span>
-                            )}
-                            {course.config?.isClosed && (
-                              <span className="text-[9px] bg-red-100 text-red-700 font-bold px-1.5 py-0.25 rounded uppercase">
-                                Closed
-                              </span>
-                            )}
-                          </div>
-                        </button>
-                      </Reorder.Item>
-                    );
-                  })}
+                  const isSelected = course.id === selectedCourseId;
+                  const activePrices = course.prices ? course.prices.filter((p) => !p.soft_delete) : [];
+                  return (
+                    <ReorderableCourseItem
+                      key={course.id}
+                      course={course}
+                      index={index}
+                      isSelected={isSelected}
+                      activePrices={activePrices}
+                      isMobile={isMobile}
+                      handleSelectCourse={handleSelectCourse}
+                    />
+                  );
+                })}
               </Reorder.Group>
             )}
           </div>
